@@ -62,14 +62,6 @@ To get started with the ULMS, follow these steps:
 3. Configure your environment variables as per the `.env` file.
 4. Start the server with `npm run start`.
 
-## Contributing
-
-We welcome contributions to the ULMS project. If you would like to contribute, please fork the repository and submit a pull request with your proposed changes.
-
-## Acknowledgments
-
-We would like to thank all the contributors who have helped to build this robust learning management system.
-
 ## Installation
 
 ```bash
