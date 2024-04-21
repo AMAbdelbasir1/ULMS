@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { ConfigModule } from '@nestjs/config';
+// import { ConfigModule } from '@nestjs/config';
 
 import { DatabaseModule } from './database/database.module';
 import { UserModule } from './user/user.module';
@@ -13,7 +13,6 @@ import { DepartmentModule } from './department/department.module';
 import { RoleModule } from './role/role.module';
 import { CourseModule } from './course/course.module';
 import { UserRoleModule } from './user-role/user-role.module';
-import { StudentInformationModule } from './student-information/student-information.module';
 import { SemesterModule } from './semester/semester.module';
 import { CourseSemesterModule } from './course-semester/course-semester.module';
 import { StudentEnrolmentModule } from './student-enrolment/student-enrolment.module';
@@ -46,10 +45,10 @@ import { QuizAnswersModule } from './quiz-answers/quiz-answers.module';
       installSubscriptionHandlers: true,
       resolvers: { Upload: GraphQLUpload },
     }),
-    ConfigModule.forRoot({
-      isGlobal: true,
-      envFilePath: '.env',
-    }),
+    // ConfigModule.forRoot({
+    //   isGlobal: true,
+    //   envFilePath: '.env',
+    // }),
     AuthModule,
     DatabaseModule,
     UserModule,
@@ -59,7 +58,6 @@ import { QuizAnswersModule } from './quiz-answers/quiz-answers.module';
     RoleModule,
     CourseModule,
     UserRoleModule,
-    StudentInformationModule,
     SemesterModule,
     CourseSemesterModule,
     StudentEnrolmentModule,

@@ -75,7 +75,7 @@ export function getInstructorCoursesTasksQuery(filterInput: {
               JOIN instructor_course_semester IC on T.course_cycle_ID=IC.course_cycle_ID
               JOIN course_semester CS on IC.course_cycle_ID=CS.cycle_ID
               JOIN course C on CS.Course_ID=C.Course_ID
-              JOIN users U on IC.instructor_ID=U.user_ID `;
+              JOIN users U on T.instructor_ID=U.user_ID `;
   if (filterInput.instructor_ID) {
     query += ` AND T.instructor_ID=@instructor_ID`;
   }
@@ -98,7 +98,7 @@ export function getStudentCoursesTasksQuery(filterInput: {
               JOIN course_semester CS on SE.course_cycle_ID=CS.cycle_ID
               JOIN course C on CS.Course_ID=C.Course_ID
               JOIN semester S on CS.semester_ID=S.semester_ID
-              JOIN users U on SE.student_ID=U.user_ID `;
+              JOIN users U on T.instructor_ID=U.user_ID `;
   if (filterInput.instructor_ID) {
     query += ` AND T.instructor_ID=@instructor_ID`;
   }

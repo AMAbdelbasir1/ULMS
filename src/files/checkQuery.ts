@@ -27,8 +27,39 @@ export function getTaskFileCheckQuery(
     throw 'UNAUTHORIZED';
   }
   const taskAvilable =
-    existingTask.recordset[0].start_Date < new Date() ||
+    existingTask.recordset[0].start_Date < new Date() &&
     existingTask.recordset[0].end_Date > new Date();
+
+  if (currentUser.roles.includes('STUDENT') && !taskAvilable) {
+    {
+      throw 'FILE_NOT_AVAILABLE';
+    }
+  }
+}
+
+export function getTaskAnswerFileCheckQuery(
+  resultPromises: [QueryResult, QueryResult, QueryResult],
+  currentUser: CurrentUser,
+) {
+  const [existingTask, existingUser, lastestSemester] = resultPromises;
+  if (existingTask.recordset.length == 0) {
+    throw 'FILE_NOT_FOUND';
+  }
+  const isStudent = currentUser.roles.includes('STUDENT');
+  if (existingUser.recordset.length == 0 && !isStudent) {
+    throw 'UNAUTHORIZED';
+  }
+
+  if (
+    isStudent &&
+    existingTask.recordset[0].student_ID !== currentUser.user_ID
+  ) {
+    throw 'UNAUTHORIZED';
+  }
+
+  const taskAvilable =
+    lastestSemester.recordset[0].start_Date < new Date() ||
+    lastestSemester.recordset[0].end_Date > new Date();
   if (currentUser.roles.includes('STUDENT') && !taskAvilable) {
     {
       throw 'FILE_NOT_AVAILABLE';

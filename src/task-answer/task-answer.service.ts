@@ -33,6 +33,7 @@ import {
   updateTaskAnswerQuery,
   uploadTaskAnswerQuery,
 } from 'src/database/queries/task-answer.query';
+import { TaskAnswerType } from './task-answer.type';
 
 @Injectable()
 export class TaskAnswerService {
@@ -69,12 +70,17 @@ export class TaskAnswerService {
           limit,
         }),
       );
-      return result.recordset;
+      return this.transfromTaskAnswers(result.recordset);
     } catch (error) {
       handleError(error, errorMessage);
     }
   }
-
+  /**
+   *
+   * @param taskAnswerFilterInput
+   * @param currentUser
+   * @returns
+   */
   async getTaskAnswersService(
     taskAnswerFilterInput: TaskAnswersFilterInput,
     currentUser: CurrentUser,
@@ -93,7 +99,7 @@ export class TaskAnswerService {
       const result = await this.conn.query(
         getTaskAnswersQuery({ ...taskAnswerFilterInput, page, limit }),
       );
-      return result.recordset;
+      return this.transfromTaskAnswers(result.recordset);
     } catch (error) {
       handleError(error, errorMessage);
     }
@@ -199,10 +205,22 @@ export class TaskAnswerService {
       this.ftpService.deleteFileFromFtp(
         resultPromises[0].recordset[0].file_path,
       );
-      
+
       return 'Task answer deleted successfully';
     } catch (error) {
       handleError(error, errorMessage);
     }
+  }
+
+  private transfromTaskAnswers(
+    taskAnswers: TaskAnswerType[],
+  ): TaskAnswerType[] {
+    return taskAnswers.map((taskAnswer) => {
+      return {
+        ...taskAnswer,
+        file_path:
+          'localhost:3000/files/file/taskanswer/' + taskAnswer.answer_ID,
+      };
+    });
   }
 }

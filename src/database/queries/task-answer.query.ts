@@ -52,8 +52,11 @@ export function getStudentTaskAnswersQuery(filterInput: {
   const offset = (filterInput.page - 1) * filterInput.limit;
 
   return {
-    query: `SELECT * FROM task_answer WHERE course_cycle_ID=@course_cycle_ID AND student_ID=@student_ID 
-            ORDER BY created_at DESC OFFSET @offset ROWS FETCH NEXT @limit ROWS ONLY`,
+    query: `SELECT TS.answer_ID,TS.task_ID,TS.grade,TS.file_path,TS.created_at,T.title as task_name 
+            FROM task_answer TS 
+            JOIN task T ON T.task_ID=TS.task_ID
+            WHERE T.course_cycle_ID=@course_cycle_ID AND TS.student_ID=@student_ID 
+            ORDER BY TS.created_at DESC OFFSET @offset ROWS FETCH NEXT @limit ROWS ONLY`,
     params: { ...filterInput, offset },
   };
 }

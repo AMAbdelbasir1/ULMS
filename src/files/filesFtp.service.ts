@@ -10,14 +10,21 @@ import { handleRouteError } from 'src/utils/graph.error';
 import { errorMessage } from './message.error';
 import {
   getLectureFilePromisesQuery,
+  getTaskAnswerFilePromisesQuery,
   getTaskFilePromisesQuery,
 } from './promisesQuery';
 import { CurrentUser } from 'src/user/user.input';
 import { getOneUserQuery } from 'src/database/queries/user.query';
-import { getLectureFileCheckQuery, getTaskFileCheckQuery } from './checkQuery';
+import { getLectureFileCheckQuery, getTaskAnswerFileCheckQuery, getTaskFileCheckQuery } from './checkQuery';
 @Injectable()
 export class FilesFtpService {
   constructor(private readonly conn: DatabaseService) {}
+  /*************************************************
+   *
+   * @param userid
+   * @param res
+   * @returns
+   */
   async viewFtpImageService(userid: string, res: Response) {
     try {
       const filePath = await this.getImagePath(userid);
@@ -31,7 +38,13 @@ export class FilesFtpService {
       });
     }
   }
-
+  /******************************************************
+   *
+   * @param fileId
+   * @param res
+   * @param currentUser
+   * @returns
+   */
   async streamFileFtpService(
     fileId: string,
     res: Response,
@@ -49,7 +62,13 @@ export class FilesFtpService {
       });
     }
   }
-
+  /*********************************************************
+   *
+   * @param fileId
+   * @param res
+   * @param currentUser
+   * @returns
+   */
   async streamFileTaskFtpService(
     fileId: string,
     res: Response,
@@ -67,7 +86,35 @@ export class FilesFtpService {
       });
     }
   }
-
+  /***********************************************************
+   *
+   * @param fileId
+   * @param res
+   * @param currentUser
+   * @returns
+   */
+  async streamFileTaskAnswerFtpService(
+    fileId: string,
+    res: Response,
+    currentUser: CurrentUser,
+  ) {
+    try {
+      const filePath = await this.getFileAnswerPath(fileId, currentUser);
+      this.streamFtpFile(filePath, res);
+      return;
+    } catch (error) {
+      const err = handleRouteError(error, errorMessage);
+      return res.status(Number(err.code)).json({
+        message: err.message,
+        code: err.code,
+      });
+    }
+  }
+  /**************************************************************
+   *
+   * @param filePath
+   * @param res
+   */
   private async streamFtpFile(filePath: string, res: Response) {
     // Get the file from the FTP server
     const httpUrl = `${process.env.FTP_URL}${filePath}`;
@@ -93,7 +140,12 @@ export class FilesFtpService {
         throw error;
       });
   }
-
+  /***************************************************
+   *
+   * @param fileid
+   * @param currentUser
+   * @returns
+   */
   private async getFilePath(fileid: string, currentUser: CurrentUser) {
     const resultPromises = await getLectureFilePromisesQuery(
       fileid,
@@ -104,7 +156,12 @@ export class FilesFtpService {
 
     return resultPromises[0].recordset[0].file_path;
   }
-
+  /***********************************************************
+   *
+   * @param fileid
+   * @param currentUser
+   * @returns
+   */
   private async getFileTaskPath(fileid: string, currentUser: CurrentUser) {
     const resultPromises = await getTaskFilePromisesQuery(
       fileid,
@@ -116,6 +173,26 @@ export class FilesFtpService {
 
     return resultPromises[0].recordset[0].file_path;
   }
+  /**************************************************
+   *
+   * @param fileid
+   * @param currentUser
+   * @returns
+   */
+  private async getFileAnswerPath(fileid: string, currentUser: CurrentUser) {
+    const resultPromises = await getTaskAnswerFilePromisesQuery(
+      fileid,
+      currentUser,
+      this.conn,
+    );
+    getTaskAnswerFileCheckQuery(resultPromises, currentUser);
+    return resultPromises[0].recordset[0].file_path;
+  }
+  /*******************************************************
+   *
+   * @param userid
+   * @returns
+   */
   private async getImagePath(userid: string) {
     const user = await this.conn.query(getOneUserQuery(userid));
     if (user.recordset.length == 0 || user.recordset[0].image_path == null) {

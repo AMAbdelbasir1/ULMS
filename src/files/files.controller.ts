@@ -73,6 +73,21 @@ export class FilesController {
       currentUser,
     );
   }
+
+  @Get('file/taskanswer/:taskanswerid')
+  @UseGuards(AuthRouteGuard, RolesRouteGuard)
+  @Roles('DOCTOR', 'STUDENT', 'ASSISTANT')
+  async streamTaskAnswerFile(
+    @Param('taskanswerid') taskanswerid: string,
+    @Res() res: Response,
+    @GetCurrentUser() currentUser: CurrentUser,
+  ) {
+    return await this.filesFtpService.streamFileTaskAnswerFtpService(
+      taskanswerid,
+      res,
+      currentUser,
+    );
+  }
 }
 
 // for download file

@@ -10,6 +10,11 @@ import {
   getOneTaskQuery,
   getStudentTaskQuery,
 } from 'src/database/queries/task.query';
+import {
+  getInstructorTaskAnswerQuery,
+  getOneTaskAnswerQuery,
+} from 'src/database/queries/task-answer.query';
+import { getLastSemeterQuery } from 'src/database/queries/semester.query';
 
 export async function getLectureFilePromisesQuery(
   lecture_File_ID: string,
@@ -55,5 +60,25 @@ export async function getTaskFilePromisesQuery(
       }
       return { recordset: [] };
     })(),
+  ]);
+}
+
+export async function getTaskAnswerFilePromisesQuery(
+  task_answer_ID: string,
+  currentUser: CurrentUser,
+  conn: DatabaseService,
+) {
+  return Promise.all([
+    conn.query(getOneTaskAnswerQuery(task_answer_ID)),
+    (async () => {
+      if (!currentUser.roles.includes('STUDENT')) {
+        return conn.query(
+          getInstructorTaskAnswerQuery(currentUser.user_ID, task_answer_ID),
+        );
+      }
+      return { recordset: [] };
+    })(),
+
+    conn.query(getLastSemeterQuery(currentUser.Faculty_ID)),
   ]);
 }
