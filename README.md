@@ -58,7 +58,7 @@ To get started with the ULMS, follow these steps:
 
 1. Clone the repository to your local machine.
 2. Install the required dependencies using `npm install`.
-3. Configure your environment variables as per the `.env.example` file.
+3. Configure your environment variables as per the `.env` file.
 4. Start the server with `npm run start`.
 
 ## Contributing
@@ -68,10 +68,6 @@ We welcome contributions to the ULMS project. If you would like to contribute, p
 ## Acknowledgments
 
 We would like to thank all the contributors who have helped to build this robust learning management system.
-
----
-
-This README is a brief overview of the ULMS. For detailed documentation, please refer to the `docs` directory in the repository.
 
 ## Installation
 
