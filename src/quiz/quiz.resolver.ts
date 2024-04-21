@@ -17,11 +17,6 @@ export class QuizResolver {
     private readonly quizValidation: QuizValidation,
   ) {}
 
-  // @Query(() => QuizType)
-  // async getQuiz(@Args('quizID') quizID: string, currentUser: CurrentUser) {
-  //   return this.quizService.getQuizService(quizID);
-  // }
-
   @Query(() => [QuizType])
   @UseGuards(AuthGuard, RolesGuard)
   @Roles('DOCTOR', 'ASSISTANT', 'STUDENT')

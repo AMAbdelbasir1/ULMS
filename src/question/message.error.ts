@@ -10,4 +10,8 @@ export const errorMessage: ErrorMessage = {
   COURSE_NOT_FOUND: { message: 'Course cycle not found', code: '404' },
   IS_TRUE_ANSWER: { message: 'Can not remove true answer', code: '400' },
   IS_TRUE: { message: 'Answer already is true', code: '400' },
+  TOTAL_GRADE_NOT_MATCH: {
+    message: 'Total questions grade not match with quiz grade',
+    code: '400',
+  },
 };

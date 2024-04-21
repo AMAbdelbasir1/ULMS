@@ -11,6 +11,8 @@ import {
   getOneAnswerQuery,
   getOneInstructorQuestionAnswerQuery,
   getOneQuestionQuery,
+  getQuestionsAndAnswerQuery,
+  getQuizQuestionQuery,
 } from 'src/database/queries/question&answers.query';
 
 export async function getQuestionsPromisesQuery(
@@ -51,6 +53,7 @@ export async function updateQuestionsPromisesQuery(
   return Promise.all([
     conn.query(getOneQuestionQuery(question_ID)),
     conn.query(getInstructorQuestionQuery(instructor_ID, question_ID)),
+    conn.query(getQuizQuestionQuery(question_ID)),
   ]);
 }
 

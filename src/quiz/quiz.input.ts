@@ -11,9 +11,6 @@ export class QuizInput {
   notes: string;
 
   @Field()
-  grade: number;
-
-  @Field()
   start_Date: string;
 
   @Field()
@@ -27,9 +24,6 @@ export class QuizUpdateInput {
 
   @Field({ nullable: true })
   title?: string;
-
-  @Field({ nullable: true })
-  grade?: number;
 
   @Field({ nullable: true })
   notes?: string;

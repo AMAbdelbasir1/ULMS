@@ -62,11 +62,6 @@ export class QuizValidation {
         'string.empty': 'title must not be empty',
         'string.min': 'title must be at least 3 characters',
       }),
-      grade: Joi.number().integer().required().min(0).messages({
-        'any.required': 'grade of task is required',
-        'number.integer': 'grade must be an integer',
-        'number.min': 'grade must be at least 0',
-      }),
       start_Date: Joi.date().required().messages({
         'any.required': 'start date of task is required',
       }),
@@ -109,10 +104,6 @@ export class QuizValidation {
       }),
       end_Date: Joi.date().optional().messages({
         'date.base': 'end date must be a valid date',
-      }),
-      grade: Joi.number().integer().optional().min(0).messages({
-        'number.integer': 'grade must be an integer',
-        'number.min': 'grade must be at least 0',
       }),
       notes: Joi.string().optional().min(3).messages({
         'string.empty': 'description must not be empty',

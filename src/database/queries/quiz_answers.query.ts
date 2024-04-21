@@ -208,7 +208,17 @@ export function sumStudentQuizGrade(
   params?: any;
 } {
   return {
-    query: `SELECT SUM(grade) as total_grade FROM quiz_answers WHERE student_ID=@student_ID AND quiz_ID=@quiz_ID`,
+    query: `SELECT SUM(grade) as total_grade FROM quiz_answers 
+            WHERE student_ID=@student_ID AND quiz_ID=@quiz_ID`,
     params: { student_ID, quiz_ID },
+  };
+}
+
+export function updateGradeQuizAnswer(question_ID: string, grade: number) {
+  return {
+    query: `UPDATE quiz_answers QA 
+            JOIN question_answers QZ ON QA.question_answers_ID=QZ.answer_ID
+            SET grade=@grade WHERE QZ.question_ID=@question_ID`,
+    params: { question_answers_ID: question_ID, grade },
   };
 }

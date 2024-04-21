@@ -1,5 +1,6 @@
 import { CurrentUser } from 'src/user/user.input';
 import { QueryResult } from 'src/database/database.entity';
+import { QuestionInput } from './question.input';
 
 export function getQuestionsCheckQuery(
   resultPromises: [QueryResult, QueryResult],
@@ -40,19 +41,38 @@ export function insertQuestionsCheckQuery(
   }
 }
 
+export function checkValidGrade(
+  questionsTotalQrade: number,
+  quizGrade: number,
+  questions: QuestionInput[],
+) {
+  quizGrade -= questionsTotalQrade;
+  questions.map((question) => {
+    if (question.grade < quizGrade) {
+      quizGrade -= question.grade;
+    }
+    if (question.grade > quizGrade) {
+      throw 'TOTAL_GRADE_NOT_MATCH';
+    }
+  });
+
+  if (quizGrade > 0) {
+    throw 'TOTAL_GRADE_NOT_MATCH';
+  }
+}
 export function updateQuestionsCheckQuery(
-  resultPromises: [QueryResult, QueryResult],
+  resultPromises: [QueryResult, QueryResult, QueryResult],
   currentUser: CurrentUser,
 ) {
-  const [existingTask, existingInstructor] = resultPromises;
+  const [existingQuiz, existingInstructor] = resultPromises;
 
-  if (existingTask.recordset.length == 0) {
+  if (existingQuiz.recordset.length == 0) {
     throw 'QUIZ_NOT_FOUND';
   }
 
   if (
     existingInstructor.recordset.length === 0 ||
-    (existingTask.recordset[0].instructor_ID !== currentUser.user_ID &&
+    (existingQuiz.recordset[0].instructor_ID !== currentUser.user_ID &&
       !currentUser.roles.includes('DOCTOR'))
   ) {
     throw 'UNAUTHORIZED';
@@ -82,7 +102,6 @@ export function updateAnswerCheckQuery(
     throw 'UNAUTHORIZED';
   }
 }
-
 
 export function deleteAnswerCheckQuery(
   resultPromises: [QueryResult, QueryResult],

@@ -3,12 +3,24 @@ export function getOneQuestionQuery(question_ID: string): {
   params?: any;
 } {
   return {
-    query: `SELECT question_ID,quiz_ID,grade FROM questions WHERE question_ID=@question_ID`,
+    query: `SELECT question_ID,quiz_ID,grade,type FROM questions WHERE question_ID=@question_ID`,
     params: { question_ID },
   };
 }
 
-export function getQuestionsQuery(filterInput: {
+export function getQuizQuestionQuery(question_ID: string): {
+  query: string;
+  params?: any;
+} {
+  return {
+    query: `SELECT q.grade FROM questions Q
+            JOIN quiz q on Q quiz_ID=q quiz_ID
+            WHERE question_ID=@question_ID`,
+    params: { question_ID },
+  };
+}
+
+export function getQuestionsAndAnswerQuery(filterInput: {
   quiz_ID: string;
   page?: number;
   limit?: number;
@@ -25,6 +37,16 @@ export function getQuestionsQuery(filterInput: {
             WHERE quiz_ID=@quiz_ID ORDER BY Q.created_at DESC  
             OFFSET @offset ROWS FETCH FIRST @limit ROWS ONLY`,
     params: { ...filterInput, offset },
+  };
+}
+
+export function getTotalQradeQuestionsQuery(quiz_ID: string): {
+  query: string;
+  params?: any;
+} {
+  return {
+    query: `SELECT SUM(grade) as total_grade FROM questions WHERE quiz_ID=@quiz_ID`,
+    params: { quiz_ID },
   };
 }
 

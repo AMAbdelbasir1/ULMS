@@ -67,7 +67,7 @@ export function updateQuizCheckQuery(
     end_Date: Date;
   },
 ) {
-  const [existingTask, existingInstructor, lastestSemester] = resultPromises;
+  const [existingTask, existingInstructor, semesterQuiz] = resultPromises;
 
   if (existingTask.recordset.length == 0) {
     throw 'QUIZ_NOT_FOUND';
@@ -82,8 +82,8 @@ export function updateQuizCheckQuery(
   }
 
   if (
-    lastestSemester.recordset[0].end_Date < new Date() ||
-    lastestSemester.recordset[0].start_Date > new Date()
+    semesterQuiz.recordset[0].end_Date < new Date() ||
+    semesterQuiz.recordset[0].start_Date > new Date()
   ) {
     throw 'CYCLE_NOT_RUNNING';
   }
@@ -92,12 +92,12 @@ export function updateQuizCheckQuery(
     (scheduleDate.end_Date ? [scheduleDate.end_Date] : []).some(
       (date) =>
         date < (scheduleDate.start_Date ? [scheduleDate.start_Date] : [])[0] ||
-        date > lastestSemester.recordset[0].end_Date,
+        date > semesterQuiz.recordset[0].end_Date,
     ) ||
     (scheduleDate.start_Date ? [scheduleDate.start_Date] : []).some(
       (date) =>
-        date < lastestSemester.recordset[0].start_Date ||
-        date > lastestSemester.recordset[0].end_Date,
+        date < semesterQuiz.recordset[0].start_Date ||
+        date > semesterQuiz.recordset[0].end_Date,
     );
 
   if (inValidDate) {

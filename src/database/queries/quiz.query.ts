@@ -3,7 +3,7 @@ export function getOneQuizQuery(quiz_ID: string): {
   params?: any;
 } {
   return {
-    query: `SELECT quiz_ID,title,instructor_ID,start_Date,end_Date,created_at FROM quiz WHERE quiz_ID=@quiz_ID`,
+    query: `SELECT * FROM quiz WHERE quiz_ID=@quiz_ID`,
     params: { quiz_ID },
   };
 }
@@ -34,6 +34,19 @@ export function getStudentQuizQuery(
             join student_enrolment SE on q.course_cycle_ID=SE.course_cycle_ID
             WHERE quiz_ID=@quiz_ID AND SE.student_ID=@user_ID`,
     params: { quiz_ID, user_ID },
+  };
+}
+
+export function getSemesterQuizQuery(quiz_ID: string): {
+  query: string;
+  params?: any;
+} {
+  return {
+    query: `SELECT S.start_Date,S.end_Date FROM quiz q
+            JOIN course_semester CS on q.course_cycle_ID=CS.cycle_ID
+            JOIN semester S on CS.semester_ID=S.semester_ID
+            WHERE quiz_ID=@quiz_ID`,
+    params: { quiz_ID },
   };
 }
 
@@ -114,14 +127,13 @@ export function insertQuizQuery(quizInput: {
   course_cycle_ID: string;
   title: string;
   notes: string;
-  grade: number;
   start_Date: string;
   end_Date: string;
   instructor_ID: string;
 }): { query: string; params?: any } {
   return {
-    query: `INSERT INTO quiz (quiz_ID,course_cycle_ID,title,notes,grade,start_Date,end_Date,instructor_ID) 
-            VALUES (@quiz_ID,@course_cycle_ID,@title,@notes,@grade,@start_Date,@end_Date,@instructor_ID)`,
+    query: `INSERT INTO quiz (quiz_ID,course_cycle_ID,title,note,start_Date,end_Date,instructor_ID) 
+            VALUES (@quiz_ID,@course_cycle_ID,@title,@notes,@start_Date,@end_Date,@instructor_ID)`,
     params: { ...quizInput },
   };
 }

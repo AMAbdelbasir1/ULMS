@@ -8,6 +8,7 @@ import { getOneStudentEnrolmentQuery } from 'src/database/queries/student-enrolm
 import {
   getInstructorQuizQuery,
   getOneQuizQuery,
+  getSemesterQuizQuery,
 } from 'src/database/queries/quiz.query';
 import { getLastSemeterQuery } from 'src/database/queries/semester.query';
 
@@ -53,6 +54,6 @@ export async function updateQuizPromisesQuery(
   return Promise.all([
     conn.query(getOneQuizQuery(quiz_ID)),
     conn.query(getInstructorQuizQuery(currentUser.user_ID, quiz_ID)),
-    conn.query(getLastSemeterQuery(currentUser.Faculty_ID)),
+    conn.query(getSemesterQuizQuery(quiz_ID)),
   ]);
 }

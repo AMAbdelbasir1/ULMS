@@ -28,13 +28,16 @@ import {
   deleteAnswersQuery,
   deleteOneAnswerQuery,
   deleteOneQuestionQuery,
-  getQuestionsQuery,
+  getQuestionsAndAnswerQuery,
   insertAnswerQuery,
   insertQuestionQuery,
   updateAnswerQuery,
   updateIsCorrectAnswerQuery,
   updateQuestionQuery,
 } from 'src/database/queries/question&answers.query';
+import { updateQuizQuery } from 'src/database/queries/quiz.query';
+import { updateGradeQuizAnswer } from 'src/database/queries/quiz_answers.query';
+import { formatQuestionsWithAnswer } from './format';
 
 @Injectable()
 export class QuestionService {
@@ -52,17 +55,20 @@ export class QuestionService {
       );
 
       getQuestionsCheckQuery(resultPromises, currentUser);
+
       const page = filterInput.page || 1;
       const limit = filterInput.limit || 10;
       const result = await this.conn.query(
-        getQuestionsQuery({
+        getQuestionsAndAnswerQuery({
           quiz_ID: filterInput.quiz_ID,
           page,
           limit,
         }),
       );
 
-      return this.formatQuestions(result.recordset);
+      const formattedQuestion = formatQuestionsWithAnswer(result.recordset);
+
+      return formattedQuestion;
     } catch (error) {
       handleError(error, errorMessage);
     }
@@ -88,10 +94,12 @@ export class QuestionService {
       );
 
       insertQuestionsCheckQuery(resultPromises);
-      const quires = [];
 
+      const quires = [];
+      let total_quiz_grade = 0;
       questions.map((question) => {
         const question_UID = uuid();
+        total_quiz_grade += question.grade;
         quires.push(
           insertQuestionQuery({
             text: question.text,
@@ -110,11 +118,9 @@ export class QuestionService {
             }),
           );
         });
-
-        // return quires;
       });
 
-      console.log(quires);
+      quires.push(updateQuizQuery({ quiz_ID, grade: total_quiz_grade }));
 
       await this.conn.executeTransaction(quires);
 
@@ -144,9 +150,36 @@ export class QuestionService {
         currentUser.user_ID,
         this.conn,
       );
+
       updateQuestionsCheckQuery(resultPromises, currentUser);
 
-      await this.conn.query(updateQuestionQuery(updateQuestionInput));
+      if (updateQuestionInput.grade) {
+        const queries = [];
+        const total_quiz_grade =
+          updateQuestionInput.grade + resultPromises[2].recordset[0].grade;
+
+        queries.push(updateQuestionQuery(updateQuestionInput));
+
+        queries.push(
+          updateQuizQuery({
+            quiz_ID: resultPromises[0].recordset[0].quiz_ID,
+            grade: total_quiz_grade,
+          }),
+        );
+
+        if (resultPromises[0].recordset[0].type !== 'answer') {
+          queries.push(
+            updateGradeQuizAnswer(
+              updateQuestionInput.question_ID,
+              updateQuestionInput.grade,
+            ),
+          );
+        }
+
+        await this.conn.executeTransaction(queries);
+      } else {
+        await this.conn.query(updateQuestionQuery(updateQuestionInput));
+      }
 
       return 'Question updated successfuly';
     } catch (error) {
@@ -180,7 +213,12 @@ export class QuestionService {
       handleError(error, errorMessage);
     }
   }
-
+  /**
+   *
+   * @param answerInput
+   * @param currentUser
+   * @returns
+   */
   async updateAnswerService(
     answerInput: AnswerUpdateInput,
     currentUser: CurrentUser,
@@ -208,7 +246,12 @@ export class QuestionService {
       handleError(error, errorMessage);
     }
   }
-
+  /**
+   *
+   * @param answer_ID
+   * @param currentUser
+   * @returns
+   */
   async deleteAnswerService(answer_ID: string, currentUser: CurrentUser) {
     try {
       const resultPromises = await updateAnswerPromisesQuery(
@@ -225,84 +268,5 @@ export class QuestionService {
     } catch (error) {
       handleError(error, errorMessage);
     }
-  }
-  /**
-   *
-   * @param questions
-   * @returns
-   */
-  private async formatQuestions(
-    questions: {
-      question_ID: string;
-      question_text: string;
-      type: string;
-      grade: number;
-      answer_ID: string;
-      answer_text: string;
-      is_correct: boolean;
-      question_created_at: Date;
-      answer_created_at: Date;
-    }[],
-  ) {
-    const formattedQuestions: {
-      question_ID: string;
-      text: string;
-      type: string;
-      grade: number;
-      answers: {
-        answer_ID: string;
-        text: string;
-        is_correct: boolean;
-      }[];
-    }[] = [];
-
-    const questionMap = new Map<
-      string,
-      {
-        question: {
-          question_ID: string;
-          text: string;
-          type: string;
-          grade: number;
-          question_created_at: Date;
-        };
-        answers: {
-          answer_ID: string;
-          text: string;
-          is_correct: boolean;
-          answer_created_at: Date;
-        }[];
-      }
-    >();
-
-    questions.forEach((question) => {
-      if (!questionMap.has(question.question_ID)) {
-        questionMap.set(question.question_ID, {
-          question: {
-            question_ID: question.question_ID,
-            text: question.question_text,
-            type: question.type,
-            grade: question.grade,
-            question_created_at: question.question_created_at,
-          },
-          answers: [],
-        });
-      }
-
-      if (question.type !== 'answer') {
-        questionMap.get(question.question_ID).answers.push({
-          answer_ID: question.answer_ID,
-          text: question.answer_text,
-          is_correct: question.is_correct,
-          answer_created_at: question.answer_created_at,
-        });
-      }
-    });
-
-    questionMap.forEach((value) => {
-      formattedQuestions.push({ ...value.question, answers: value.answers });
-    });
-
-    return formattedQuestions;
   }
 }
