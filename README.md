@@ -58,7 +58,7 @@ To get started with the ULMS, follow these steps:
 
 1. Clone the repository to your local machine.
 2. Install the required dependencies using `npm install`.
-3. Configure your environment variables as per the `.env.example` file.
+3. Configure your environment variables as per the `.env` file.
 4. Start the server with `npm run start`.
 
 ## Contributing
@@ -68,10 +68,6 @@ We welcome contributions to the ULMS project. If you would like to contribute, p
 ## Acknowledgments
 
 We would like to thank all the contributors who have helped to build this robust learning management system.
-
----
-
-This README is a brief overview of the ULMS. For detailed documentation, please refer to the `docs` directory in the repository.
 
 ## Installation
 
@@ -91,17 +87,3 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
