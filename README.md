@@ -44,13 +44,14 @@ The University Learning Management System (ULMS) is a comprehensive platform bui
 - Access the GraphQL interactive documentation and perform test queries at: `http://localhost:3000/graphql`
 - Stream files from the local server:
 
-  - Profile images: `GET /image/:imageid`
-  - Lecture or lab files: `GET /file/:fileId`
+  - Profile images: `GET /files/image/:imageid`
+  - Lecture or lab files: `GET /files/file/:fileId`
 
 - Stream files from the FTP server:
-  - FTP profile images: `GET /image/ftp/:imageid`
-  - FTP files: `GET /file/ftp/:fileid`
-  - Task files: `GET /file/task/:taskid`
+  - FTP profile images: `GET /files/image/ftp/:imageid`
+  - FTP files: `GET /files/file/ftp/:fileid`
+  - Task files: `GET /files/file/task/:taskid`
+  - Task answer files: `GET /files/file/taskanswer/:taskanswerid`
 
 ## Getting Started
 
@@ -60,14 +61,6 @@ To get started with the ULMS, follow these steps:
 2. Install the required dependencies using `npm install`.
 3. Configure your environment variables as per the `.env` file.
 4. Start the server with `npm run start`.
-
-## Contributing
-
-We welcome contributions to the ULMS project. If you would like to contribute, please fork the repository and submit a pull request with your proposed changes.
-
-## Acknowledgments
-
-We would like to thank all the contributors who have helped to build this robust learning management system.
 
 ## Installation
 
