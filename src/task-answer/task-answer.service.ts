@@ -166,6 +166,12 @@ export class TaskAnswerService {
     }
   }
 
+  /**
+   *
+   * @param taskAnswerUpdateInput
+   * @param currentUser
+   * @returns
+   */
   async updateTaskAnswerService(
     taskAnswerUpdateInput: TaskAnswerUpdateInput,
     currentUser: CurrentUser,
@@ -186,7 +192,12 @@ export class TaskAnswerService {
       handleError(error, errorMessage);
     }
   }
-
+  /**
+   *
+   * @param taskAnswer_ID
+   * @param currentUser
+   * @returns
+   */
   async deleteTaskAnswerService(
     taskAnswer_ID: string,
     currentUser: CurrentUser,
@@ -211,7 +222,11 @@ export class TaskAnswerService {
       handleError(error, errorMessage);
     }
   }
-
+  /**
+   *
+   * @param taskAnswers
+   * @returns
+   */
   private transfromTaskAnswers(
     taskAnswers: TaskAnswerType[],
   ): TaskAnswerType[] {
@@ -219,7 +234,9 @@ export class TaskAnswerService {
       return {
         ...taskAnswer,
         file_path:
-          'localhost:3000/files/file/taskanswer/' + taskAnswer.answer_ID,
+          process.env.BASE_URL +
+          '/files/file/taskanswer/' +
+          taskAnswer.answer_ID,
       };
     });
   }

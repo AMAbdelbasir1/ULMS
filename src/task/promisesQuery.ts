@@ -4,7 +4,11 @@ import { CurrentUser } from 'src/user/user.input';
 import { getSemesterCourseQuery } from 'src/database/queries/course-semester.query';
 import { getOneInstructorCourseQuery } from 'src/database/queries/instructor-course.query';
 import { getOneStudentEnrolmentQuery } from 'src/database/queries/student-enrolment.query';
-import { getInstructorTaskQuery, getOneTaskQuery } from 'src/database/queries/task.query';
+import {
+  getInstructorTaskQuery,
+  getOneTaskQuery,
+  getSemesterTaskQuery,
+} from 'src/database/queries/task.query';
 
 export async function getTasksPromisesQuery(
   course_cycle_ID: string,
@@ -41,6 +45,18 @@ export async function creatTaskPromisesQuery(
 }
 
 export async function updateTaskPromisesQuery(
+  task_ID: string,
+  instructor_ID: string,
+  conn: DatabaseService,
+) {
+  return Promise.all([
+    conn.query(getOneTaskQuery(task_ID)),
+    conn.query(getInstructorTaskQuery(instructor_ID, task_ID)),
+    conn.query(getSemesterTaskQuery(task_ID)),
+  ]);
+}
+
+export async function deleteTaskPromisesQuery(
   task_ID: string,
   instructor_ID: string,
   conn: DatabaseService,

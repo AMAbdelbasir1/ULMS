@@ -22,6 +22,19 @@ export function getInstructorTaskQuery(
   };
 }
 
+export function getSemesterTaskQuery(task_ID: string): {
+  query: string;
+  params?: any;
+} {
+  return {
+    query: `SELECT S.start_Date,S.end_Date FROM task T 
+            JOIN course_semester CS ON T.course_cycle_ID=CS.cycle_ID
+            JOIN semester S ON CS.semester_ID=S.semester_ID
+            WHERE task_ID=@task_ID`,
+    params: { task_ID },
+  };
+}
+
 export function getStudentTaskQuery(
   user_ID: string,
   task_ID: string,

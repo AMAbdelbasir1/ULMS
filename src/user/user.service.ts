@@ -32,6 +32,7 @@ import { errorMessage } from './message.error';
 import { createPromisesQuery, updatePromisesQuery } from './promisesQuery';
 import { createCheckQuery, updateCheckQuery } from './checkQuery';
 import { QueryResult } from 'src/database/database.entity';
+import { getFacultyUser, getUsers, transformUsers } from './user.helper';
 
 @Injectable()
 export class UserService {
@@ -52,79 +53,18 @@ export class UserService {
       let users: QueryResult;
       if (currentUser.roles.includes('ADMIN')) {
         filterInput.faculty_ID = currentUser.Faculty_ID;
-        users = await this.conn.query(this.getFacultyUser(filterInput));
+        users = await this.conn.query(getFacultyUser(filterInput));
       } else {
-        users = await this.conn.query(this.getUsers(filterInput));
+        users = await this.conn.query(getUsers(filterInput));
       }
 
-      return this.transformUsers(users.recordset);
+      return transformUsers(users.recordset);
     } catch (error) {
       handleError(error, errorMessage);
     }
   }
 
-  private getFacultyUser(filterInput: UserFilterInput) {
-    if (filterInput.role == 'Student') {
-      return getStudentsUserQuery({
-        page: filterInput.page || 1,
-        limit: filterInput.limit || 20,
-        faculty_ID: filterInput.faculty_ID,
-        department_ID: filterInput.department_ID,
-        level: filterInput.level,
-      });
-    } else {
-      return getUsersQuery({
-        page: filterInput.page || 1,
-        limit: filterInput.limit || 20,
-        faculty_ID: filterInput.faculty_ID,
-        role: filterInput.role?.toUpperCase(),
-      });
-    }
-  }
-
-  private getUsers(filterInput: UserFilterInput) {
-    if (filterInput.role == 'Student') {
-      return getStudentsUserQuery({
-        page: filterInput.page || 1,
-        limit: filterInput.limit || 20,
-        faculty_ID: filterInput.faculty_ID,
-        department_ID: filterInput.department_ID,
-        level: filterInput.level,
-      });
-    } else {
-      return getUsersQuery({
-        page: filterInput.page || 1,
-        limit: filterInput.limit || 20,
-        faculty_ID: filterInput.faculty_ID,
-        role: filterInput.role?.toUpperCase(),
-      });
-    }
-  }
-  private transformUsers(users: any[]): any[] {
-    const transformedUsers = [];
-    const userMap = new Map();
-
-    for (const user of users) {
-      const userId = user.user_ID;
-      if (!userMap.has(userId)) {
-        userMap.set(userId, true);
-        user.roles = [user.roles];
-        transformedUsers.push(user);
-      } else {
-        const existingUser = transformedUsers.find((u) => u.user_ID === userId);
-        existingUser.roles.push(user.roles);
-      }
-    }
-
-    return transformedUsers;
-  }
-  // async getUserService(user_ID: string) {
-  //   const users = await this.conn.query(
-  //     `SELECT * FROM users WHERE user_ID='${user_ID}'`,
-  //   );
-  //   return users.recordset;
-  // }
-  /**
+  /********************************************************
    * Creates a new user with the provided user input.
    * Performs data validation, role validation, and inserts the user in the user-role and student-info tables.
    * @param createUserInput - The user input object.
@@ -194,7 +134,7 @@ export class UserService {
       handleError(error, errorMessage);
     }
   }
-  /**
+  /*************************************************************************
    * Updates the user account with the provided update input and current user.
    * Depending on the user's role, different fields can be updated.
    * @param updateUserInput - The update input object.
@@ -272,7 +212,7 @@ export class UserService {
     }
   }
 
-  /**
+  /****************************************************************************
    * Deletes the user account with the provided user ID and current user.
    * Only users with the appropriate permissions can delete user accounts.
    * @param user_ID - The ID of the user account to delete.

@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
+import { config } from 'dotenv';
+config();
 
 import { DatabaseService } from 'src/database/database.service';
 import { handleError } from 'src/utils/graph.error';
@@ -7,11 +9,13 @@ import { TaskFilterInput, TaskInput, TaskUpdateInput } from './task.input';
 import { errorMessage } from './message.error';
 import {
   creatTaskPromisesQuery,
+  deleteTaskPromisesQuery,
   getTasksPromisesQuery,
   updateTaskPromisesQuery,
 } from './promisesQuery';
 import {
   createTaskCheckQuery,
+  deleteTaskCheckQuery,
   getTasksCheckQuery,
   updateTaskCheckQuery,
 } from './checkQuery';
@@ -104,7 +108,7 @@ export class TaskService {
     return tasks.map((task) => {
       return {
         ...task,
-        file_path: 'localhost:3000/files/file/task/' + task.task_ID,
+        file_path: process.env.BASE_URL + '/files/file/task/' + task.task_ID,
       };
     });
   }
@@ -138,7 +142,10 @@ export class TaskService {
         this.conn,
       );
 
-      createTaskCheckQuery(resultPromises);
+      createTaskCheckQuery(resultPromises, {
+        start_Date: new Date(taskInput.start_Date),
+        end_Date: new Date(taskInput.end_Date),
+      });
 
       const { filePath } = await this.ftpService.saveFileToFtp(file, 'tasks');
       file_path = filePath;
@@ -158,7 +165,12 @@ export class TaskService {
       handleError(error, errorMessage);
     }
   }
-
+  /**
+   *
+   * @param taskUpdateInput
+   * @param currentUser
+   * @returns
+   */
   async updateTaskService(
     taskUpdateInput: TaskUpdateInput,
     currentUser: CurrentUser,
@@ -177,7 +189,10 @@ export class TaskService {
         this.conn,
       );
 
-      updateTaskCheckQuery(resultPromises, currentUser);
+      updateTaskCheckQuery(resultPromises, currentUser, {
+        start_Date: new Date(taskUpdateInput.start_Date),
+        end_Date: new Date(taskUpdateInput.end_Date),
+      });
 
       if (file) {
         const { filePath } = await this.ftpService.saveFileToFtp(file, 'tasks');
@@ -200,15 +215,20 @@ export class TaskService {
       handleError(error, errorMessage);
     }
   }
-
+  /**
+   *
+   * @param task_ID
+   * @param currentUser
+   * @returns
+   */
   async deleteTaskService(task_ID: string, currentUser: CurrentUser) {
     try {
-      const resultPromises = await updateTaskPromisesQuery(
+      const resultPromises = await deleteTaskPromisesQuery(
         task_ID,
         currentUser.user_ID,
         this.conn,
       );
-      updateTaskCheckQuery(resultPromises, currentUser);
+      deleteTaskCheckQuery(resultPromises, currentUser);
 
       await this.conn.query(deleteOneTaskQuery(task_ID));
 

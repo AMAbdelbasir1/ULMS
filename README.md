@@ -36,7 +36,6 @@ The University Learning Management System (ULMS) is a comprehensive platform bui
   - Participate in quizzes and submit tasks.
 
 - **User Account Management**
-  - All users can change their passwords.
   - Only superadmins and admins can manage user accounts and edit user information.
 
 ## Documentation and Testing
