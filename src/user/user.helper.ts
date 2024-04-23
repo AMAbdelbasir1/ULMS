@@ -50,6 +50,9 @@ export function transformUsers(users: any[]): any[] {
     if (!userMap.has(userId)) {
       userMap.set(userId, true);
       user.roles = [user.roles];
+      user.image_path = user.image_path
+        ? process.env.BASE_URL + '/files/image/' + user.user_ID
+        : null;
       transformedUsers.push(user);
     } else {
       const existingUser = transformedUsers.find((u) => u.user_ID === userId);
