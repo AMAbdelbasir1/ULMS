@@ -34,15 +34,15 @@ export class UniversityResolver {
     return await this.unvirstiyService.getOneUnvirsityService(university_ID);
   }
 
-  @Mutation(() => UniversityType)
+  @Mutation(() => String)
   @UseGuards(AuthGuard, RolesGuard)
   @Roles('SUPERADMIN')
   async createUniversity(
     @Args('logo', { type: () => GraphQLUpload })
     logo: FileUpload,
     @Args('name') name: string,
-  ): Promise<UniversityType> {
-    return await this.unvirstiyService.createUniversityService(name, logo);
+  ): Promise<string> {
+    return this.unvirstiyService.createUniversityService(name, logo);
   }
 
   @Mutation(() => String)
@@ -52,7 +52,7 @@ export class UniversityResolver {
     @Args('updateInput') updateInput: universityUpdateInput,
   ): Promise<string> {
     this.universityValidation.validateUniversityUpdateInput(updateInput);
-    
+
     return await this.unvirstiyService.updateUniversityService(updateInput);
   }
 

@@ -47,7 +47,7 @@ export function insertFacultyQuery(
 ): { query: string; params?: any } {
   return {
     query: `INSERT INTO faculty(faculty_ID,university_ID,name,levels,logo_path) 
-          VALUES (@ID,@university_ID,N'@name',@levels,'@logoPath')`,
+          VALUES (@ID,@university_ID,@name,@levels,@logoPath)`,
     params: { ID, ...facultyInput, logoPath },
   };
 }

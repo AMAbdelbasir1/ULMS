@@ -47,9 +47,7 @@ export class FacultyResolver {
   async updateFaculty(
     @Args('facultyUpdateInput') facultyUpdateInput: FacultyUpdateInput,
   ): Promise<string> {
-    this.facultyValidation.validateFacultyUpdateInput({
-      facultyUpdateInput,
-    });
+    this.facultyValidation.validateFacultyUpdateInput(facultyUpdateInput);
 
     return await this.facultyService.updateFacultyService(facultyUpdateInput);
   }

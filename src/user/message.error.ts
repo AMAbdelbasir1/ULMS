@@ -12,6 +12,10 @@ export const errorMessage = {
     message: 'Faculty required',
     code: '400',
   },
+  FACULTY_NOT_FOUND: {
+    message: 'Faculty not found',
+    code: '404',
+  },
   NOT_IMAGE: { message: 'File not image', code: '400' },
   ENTER_DATA: { message: 'Data missing', code: '400' },
 };

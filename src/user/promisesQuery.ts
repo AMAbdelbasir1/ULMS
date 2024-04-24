@@ -8,6 +8,7 @@ import {
 } from 'src/database/queries/user.query';
 import { CreateUserInput } from './user.input';
 import { UpdateUserInput } from './user.input';
+import { getOneFacultyQuery } from 'src/database/queries/faculty.query';
 
 export async function createPromisesQuery(
   newUser: CreateUserInput,
@@ -16,6 +17,12 @@ export async function createPromisesQuery(
   return Promise.all([
     conn.query(getOneRoleQuery(newUser.role_ID)),
     conn.query(getOneUserEmailQuery(newUser.email)),
+    (async () => {
+      if (newUser.Faculty_ID) {
+        return conn.query(getOneFacultyQuery(newUser.Faculty_ID));
+      }
+      return { recordset: [{ Faculty_ID: 'found' }] };
+    })(),
     (async () => {
       if (newUser.phone) {
         return conn.query(getOneUserPhoneQuery(newUser.phone));

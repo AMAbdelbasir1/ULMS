@@ -13,8 +13,6 @@ import { handleError } from 'src/utils/graph.error';
 import {
   createUsersQuery,
   deleteUserQuery,
-  getStudentsUserQuery,
-  getUsersQuery,
   getOneUserWithRoleQuery,
   updateUserQuery,
 } from 'src/database/queries/user.query';
@@ -78,17 +76,19 @@ export class UserService {
       if (currentUser.roles.includes('ADMIN')) {
         createUserInput.Faculty_ID = currentUser.Faculty_ID;
       }
+      
       const resultPromisesQuery = await createPromisesQuery(
         createUserInput,
         this.conn,
       );
+
       if (
         resultPromisesQuery[0].recordset[0].name == 'SUPERADMIN' &&
         createUserInput.Faculty_ID
       ) {
         createUserInput.Faculty_ID = null;
       }
-
+      
       await createCheckQuery(
         resultPromisesQuery,
         createUserInput.Faculty_ID,

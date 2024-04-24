@@ -29,30 +29,66 @@ export async function updateCheckQuery(
 }
 
 export async function createCheckQuery(
-  resultPromisesQuery: [QueryResult, QueryResult, QueryResult, QueryResult],
+  resultPromisesQuery: [
+    QueryResult,
+    QueryResult,
+    QueryResult,
+    QueryResult,
+    QueryResult,
+  ],
   Faculty_ID: string,
   currentUser: CurrentUser,
 ) {
-  const [existingRole, existingEmail, existingPhone, existingDepartment] =
-    resultPromisesQuery;
+  const [
+    existingRole,
+    existingEmail,
+    existingFaculty,
+    existingPhone,
+    existingDepartment,
+  ] = resultPromisesQuery;
 
   if (existingRole.recordset.length == 0) {
     throw 'NOT_EXIST_ROLE';
-  } else if (
-    existingRole.recordset[0].name == 'SUPERADMIN' &&
-    currentUser.roles.includes('ADMIN')
+  }
+
+  const existingRoleName = existingRole.recordset[0].name;
+
+  if (existingRoleName == 'SUPERADMIN' && currentUser.roles.includes('ADMIN')) {
+    throw 'UNAUTHORIZED';
+  }
+
+  if (
+    existingRoleName !== 'SUPERADMIN' &&
+    existingRoleName !== 'ADMIN' &&
+    currentUser.roles.includes('SUPERADMIN')
   ) {
     throw 'UNAUTHORIZED';
-  } else if (
+  }
+
+  if (
     resultPromisesQuery[0].recordset[0].name !== 'SUPERADMIN' &&
     !Faculty_ID
   ) {
     throw 'FACULTY_REQUIRED';
-  } else if (existingEmail.recordset.length > 0) {
+  }
+
+  if (
+    existingRoleName !== 'SUPERADMIN' &&
+    existingFaculty.recordset.length == 0 &&
+    currentUser.roles.includes('SUPERADMIN')
+  ) {
+    throw 'FACULTY_NOT_FOUND';
+  }
+
+  if (existingEmail.recordset.length > 0) {
     throw 'EXIST_EMAIL';
-  } else if (existingPhone.recordset.length > 0) {
+  }
+
+  if (existingPhone.recordset.length > 0) {
     throw 'EXIST_PHONE';
-  } else if (existingDepartment.recordset.length == 0) {
+  }
+
+  if (existingDepartment.recordset.length == 0) {
     throw 'NOT_EXIST_DEPARTMENT';
   }
 }

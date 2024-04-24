@@ -5,6 +5,9 @@ import {
   validateFileSize,
 } from 'src/utils/file.utils';
 import * as ftp from 'promise-ftp';
+import { config } from 'dotenv';
+
+config();
 const ftpClient: ftp = new ftp();
 
 export async function saveFtpFile(
@@ -17,7 +20,7 @@ export async function saveFtpFile(
   const filePath = `/uploads/${folderName}/${Date.now()}-${filename}`;
   const fileType = mimetype.split('/')[0];
   const fileExtension = filename.split('.').pop();
-  
+
   if (isConnect) {
     await connectToFtp();
   }
@@ -108,10 +111,10 @@ export async function deleteFileFtp(filePath: string): Promise<string> {
 }
 export async function connectToFtp(): Promise<void> {
   await ftpClient.connect({
-    host: 'site1473.siteasp.net',
+    host: process.env.FTP_HOST,
     port: 21,
-    user: 'site1473',
-    password: '6s?QP#7o%bS8',
+    user: process.env.FTP_USER,
+    password: process.env.FTP_PASSWORD,
   });
 }
 

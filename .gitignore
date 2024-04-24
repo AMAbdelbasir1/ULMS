@@ -2,6 +2,12 @@
 /dist
 /node_modules
 
+uploads/user/*
+uploads/faculty/*
+uploads/university/*
+uploads/lecture-files/*
+uploads/course/*
+
 notes
 .env
 # Logs

@@ -17,7 +17,7 @@ export async function saveImage(
   const { filename, createReadStream, mimetype } = await image;
   // console.log(image);
   const isImage = mimetype.split('/')[0];
-  const path = `/uploads/${folderName}/${filename}`;
+  const path = `/uploads/${folderName}/${Date.now()}-${filename}`;
   return new Promise((resolve, reject) => {
     if (isImage !== 'image') {
       console.log('Not an image:', isImage);

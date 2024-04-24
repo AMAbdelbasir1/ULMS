@@ -16,6 +16,3 @@ export const errorMessage: ErrorMessage = {
   },
   ENTER_DATA: { message: 'Data missing', code: '400' },
 };
-/**
-
- */

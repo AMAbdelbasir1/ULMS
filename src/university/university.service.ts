@@ -62,11 +62,7 @@ export class UniversityService {
       const un_ID: string = uuid();
       await this.conn.query(insertUniversityQuery(un_ID, name, logoPath));
 
-      // Return the created university
-      const createdUniversity = await this.conn.query(
-        getOneUniversityQuery(un_ID),
-      );
-      return createdUniversity.recordset[0];
+      return 'create unvirsty successfuly';
     } catch (error) {
       handleError(error, errorMessage);
     }
@@ -119,7 +115,7 @@ export class UniversityService {
         this.conn.query(getAllFacultyQuery(1, 1, university_ID)),
       ]);
       if (existingUniversity.recordset.length === 0) {
-        throw 'INVALID_ID';
+        throw 'UNIVERSITY_NOT_FOUND';
       }
       if (existingFaculties.recordset.length > 0) {
         throw 'EXISIT_FACULTY';

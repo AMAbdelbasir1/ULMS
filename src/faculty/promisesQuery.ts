@@ -38,7 +38,7 @@ export async function updateFacultyPromisesQuery(
           ),
         );
       }
-      return { recordset: [] };
+      return { recordset: [{ found: 'found' }] };
     })(),
     (async () => {
       if (updateFacultyInput.university_ID) {
@@ -46,7 +46,7 @@ export async function updateFacultyPromisesQuery(
           getOneUniversityQuery(updateFacultyInput.university_ID),
         );
       }
-      return { recordset: [] };
+      return { recordset: [{ found: 'found' }] };
     })(),
   ]);
 }
