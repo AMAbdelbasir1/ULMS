@@ -1,7 +1,7 @@
-import { DatabaseService } from 'src/database/database.service';
-import { getOneRoleQuery } from 'src/database/queries/role.query';
-import { getOneUserRoleQuery } from 'src/database/queries/user-role.query';
-import { getOneUserQuery, getOneUserWithRoleQuery } from 'src/database/queries/user.query';
+import { DatabaseService } from '../database/database.service';
+import { getOneRoleQuery } from '../database/queries/role.query';
+import { getOneUserRoleQuery } from '../database/queries/user-role.query';
+import { getOneUserQuery, getOneUserWithRoleQuery } from '../database/queries/user.query';
 import { UserRoleInput } from './user-role.input';
 
 export async function createUserRolePromisesQuery(

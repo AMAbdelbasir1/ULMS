@@ -1,18 +1,18 @@
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../database/database.service';
 
-import { getSemesterCourseQuery } from 'src/database/queries/course-semester.query';
-import { getOneStudentEnrolmentQuery } from 'src/database/queries/student-enrolment.query';
+import { getSemesterCourseQuery } from '../database/queries/course-semester.query';
+import { getOneStudentEnrolmentQuery } from '../database/queries/student-enrolment.query';
 import {
   getInstructorTaskQuery,
   getOneTaskQuery,
   getStudentTaskQuery,
-} from 'src/database/queries/task.query';
+} from '../database/queries/task.query';
 import {
   getInstructorTaskAnswerQuery,
   getOneTaskAnswerQuery,
   getOneTaskStudentAnswerQuery,
-} from 'src/database/queries/task-answer.query';
-import { CurrentUser } from 'src/user/user.input';
+} from '../database/queries/task-answer.query';
+import { CurrentUser } from '../user/user.input';
 
 export async function getTaskAnswersPromisesQuery(
   task_ID: string,

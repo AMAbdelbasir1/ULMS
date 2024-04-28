@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
 
-import { DatabaseService } from 'src/database/database.service';
-import { handleError } from 'src/utils';
+import { DatabaseService } from '../database/database.service';
+import { handleError } from '../utils';
 import { errorMessage } from './message.error';
-import { CurrentUser } from 'src/user/user.input';
+import { CurrentUser } from '../user/user.input';
 import {
   LectureFilterInput,
   LectureInput,
@@ -15,7 +15,7 @@ import {
   getLecturesCourseQuery,
   insertLectureQuery,
   updateLectureQuery,
-} from 'src/database/queries/lecture.query';
+} from '../database/queries/lecture.query';
 import {
   createLecturesCoursePromisesQuery,
   // deleteLecturePromisesQuery,
@@ -86,7 +86,7 @@ export class LectureService {
       if (currentUser.roles.includes('ASSISTANT')) {
         lectureInput.type = 'Lab';
       }
-      
+
       await this.conn.query(
         insertLectureQuery({
           lecture_ID: uuid(),

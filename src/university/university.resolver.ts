@@ -4,11 +4,11 @@ import { UniversityService } from './university.service';
 
 import { universityUpdateInput } from './university.input';
 import { UseGuards } from '@nestjs/common';
-import { Roles } from 'src/auth/decorator/role.decorator';
-import { AuthGuard } from 'src/auth/guard/auth.guard';
-import { RolesGuard } from 'src/auth/guard/roles.guard';
+import { Roles } from '../auth/decorator/role.decorator';
+import { AuthGuard } from '../auth/guard/auth.guard';
+import { RolesGuard } from '../auth/guard/roles.guard';
 import { UniversityValidation } from './university.validation';
-import { FileUpload } from 'src/utils/file.utils';
+import { FileUpload } from '../utils/file.utils';
 import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
 
 @Resolver(() => UniversityType)

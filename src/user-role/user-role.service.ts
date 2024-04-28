@@ -1,15 +1,15 @@
 // This is a TypeScript file for a NestJS service that handles user roles. It includes methods to create and delete user roles.
 
 import { Injectable } from '@nestjs/common';
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../database/database.service';
 import { UserRoleInput } from './user-role.input';
 import {
   deleteOneUserRoleQuery,
   getAllUserRolesQuery,
   insertUserRoleQuery,
-} from 'src/database/queries/user-role.query';
-import { handleError } from 'src/utils/graph.error';
-import { CurrentUser } from 'src/user/user.input';
+} from '../database/queries/user-role.query';
+import { handleError } from '../utils/graph.error';
+import { CurrentUser } from '../user/user.input';
 import { errorMessage } from './message.error';
 import {
   createUserRolePromisesQuery,
@@ -37,7 +37,7 @@ export class UserRoleService {
           return { role_ID: role.role_ID, name: role.name };
         },
       );
-      
+
       return roles;
     } catch (error) {
       handleError(error, errorMessage);

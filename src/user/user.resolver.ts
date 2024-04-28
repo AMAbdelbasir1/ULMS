@@ -7,11 +7,11 @@ import {
   UserFilterInput,
   CreateUserInput,
 } from './user.input';
-import { GetCurrentUser } from 'src/auth/decorator/user.decorator';
+import { GetCurrentUser } from '../auth/decorator/user.decorator';
 import { UseGuards } from '@nestjs/common';
-import { Roles } from 'src/auth/decorator/role.decorator';
-import { AuthGuard } from 'src/auth/guard/auth.guard';
-import { RolesGuard } from 'src/auth/guard/roles.guard';
+import { Roles } from '../auth/decorator/role.decorator';
+import { AuthGuard } from '../auth/guard/auth.guard';
+import { RolesGuard } from '../auth/guard/roles.guard';
 import { UserValidation } from './user.validation';
 
 @Resolver(() => UserType)

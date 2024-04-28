@@ -3,19 +3,24 @@ import { Response } from 'express';
 import * as http from 'http';
 import { config } from 'dotenv';
 
-config();
-
-import { DatabaseService } from 'src/database/database.service';
-import { handleRouteError } from 'src/utils/graph.error';
+import { DatabaseService } from '../database/database.service';
+import { handleRouteError } from '../utils/graph.error';
 import { errorMessage } from './message.error';
 import {
   getLectureFilePromisesQuery,
   getTaskAnswerFilePromisesQuery,
   getTaskFilePromisesQuery,
 } from './promisesQuery';
-import { CurrentUser } from 'src/user/user.input';
-import { getOneUserQuery } from 'src/database/queries/user.query';
-import { getLectureFileCheckQuery, getTaskAnswerFileCheckQuery, getTaskFileCheckQuery } from './checkQuery';
+import { CurrentUser } from '../user/user.input';
+import { getOneUserQuery } from '../database/queries/user.query';
+import {
+  getLectureFileCheckQuery,
+  getTaskAnswerFileCheckQuery,
+  getTaskFileCheckQuery,
+} from './checkQuery';
+
+config();
+
 @Injectable()
 export class FilesFtpService {
   constructor(private readonly conn: DatabaseService) {}

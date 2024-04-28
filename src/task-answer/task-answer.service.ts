@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
 
-import { DatabaseService } from 'src/database/database.service';
-import { FtpTestService } from 'src/ftp-test/ftp-test.service';
-import { handleError } from 'src/utils';
+import { DatabaseService } from '../database/database.service';
+import { FtpTestService } from '../ftp-test/ftp-test.service';
+import { handleError } from '../utils';
 import { errorMessage } from './message.error';
 import {
   StudentTaskAnswersFilterInput,
@@ -11,7 +11,7 @@ import {
   TaskAnswerUpdateInput,
   TaskAnswersFilterInput,
 } from './task-answer.input';
-import { CurrentUser } from 'src/user/user.input';
+import { CurrentUser } from '../user/user.input';
 import {
   deleteTaskAnswerPromisesQuery,
   getStudentTaskAnswersPromisesQuery,
@@ -32,7 +32,7 @@ import {
   getTaskAnswersQuery,
   updateTaskAnswerQuery,
   uploadTaskAnswerQuery,
-} from 'src/database/queries/task-answer.query';
+} from '../database/queries/task-answer.query';
 import { TaskAnswerType } from './task-answer.type';
 
 @Injectable()

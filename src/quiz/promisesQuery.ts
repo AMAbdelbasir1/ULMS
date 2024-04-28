@@ -1,16 +1,15 @@
-import { DatabaseService } from 'src/database/database.service';
-import { CurrentUser } from 'src/user/user.input';
+import { DatabaseService } from '../database/database.service';
+import { CurrentUser } from '../user/user.input';
 
-import { getSemesterCourseQuery } from 'src/database/queries/course-semester.query';
-import { getOneInstructorCourseQuery } from 'src/database/queries/instructor-course.query';
-import { getOneStudentEnrolmentQuery } from 'src/database/queries/student-enrolment.query';
+import { getSemesterCourseQuery } from '../database/queries/course-semester.query';
+import { getOneInstructorCourseQuery } from '../database/queries/instructor-course.query';
+import { getOneStudentEnrolmentQuery } from '../database/queries/student-enrolment.query';
 
 import {
   getInstructorQuizQuery,
   getOneQuizQuery,
   getSemesterQuizQuery,
-} from 'src/database/queries/quiz.query';
-import { getLastSemeterQuery } from 'src/database/queries/semester.query';
+} from '../database/queries/quiz.query';
 
 export async function getQuizzesPromisesQuery(
   course_cycle_ID: string,

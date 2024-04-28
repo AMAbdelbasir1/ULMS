@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
 
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../database/database.service';
 import {
   deleteOneRoleQuery,
   getAllRoleQuery,
@@ -9,16 +9,14 @@ import {
   getRoleByNameQuery,
   insertRoleQuery,
   updateRoleQuery,
-} from 'src/database/queries/role.query';
+} from '../database/queries/role.query';
 import { RoleFilterInput, RoleInput, RoleUpdateInput } from './role.input';
-import { handleError } from 'src/utils/graph.error';
+import { handleError } from '../utils/graph.error';
 import { errorMessage } from './message.error';
 
 @Injectable()
 export class RoleService {
-  constructor(
-    private readonly conn: DatabaseService
-  ) {}
+  constructor(private readonly conn: DatabaseService) {}
 
   async getAllRolesService(filterInput: RoleFilterInput) {
     try {

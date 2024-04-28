@@ -1,4 +1,4 @@
-import { ErrorMessage } from 'src/utils';
+import { ErrorMessage } from '../utils';
 
 export const errorMessage: ErrorMessage = {
   FILE_NOT_FOUND: {

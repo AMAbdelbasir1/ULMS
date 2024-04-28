@@ -1,4 +1,4 @@
-import { ErrorMessage } from 'src/utils';
+import { ErrorMessage } from '../utils';
 
 export const errorMessage: ErrorMessage = {
   LECTURE_NOT_FOUND: {

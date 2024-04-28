@@ -1,10 +1,10 @@
-import { DatabaseService } from 'src/database/database.service';
-import { getAllDepartmentQuery } from 'src/database/queries/department.query';
+import { DatabaseService } from '../database/database.service';
+import { getAllDepartmentQuery } from '../database/queries/department.query';
 import {
   getFacultyByNameQuery,
   getOneFacultyQuery,
-} from 'src/database/queries/faculty.query';
-import { getOneUniversityQuery } from 'src/database/queries/university.query';
+} from '../database/queries/faculty.query';
+import { getOneUniversityQuery } from '../database/queries/university.query';
 
 export async function createFacultyPromisesQuery(
   insertInput: { university_ID: string; name: string; levels?: number },

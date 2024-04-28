@@ -1,20 +1,20 @@
-import { DatabaseService } from 'src/database/database.service';
-import { CurrentUser } from 'src/user/user.input';
+import { DatabaseService } from '../database/database.service';
+import { CurrentUser } from '../user/user.input';
 import {
   getOneInstructorLectureFileQuery,
   getOneLectureFileQuery,
   getOneStudentEnrollmentLectureFileQuery,
-} from 'src/database/queries/lecture-file.query';
+} from '../database/queries/lecture-file.query';
 import {
   getInstructorTaskQuery,
   getOneTaskQuery,
   getStudentTaskQuery,
-} from 'src/database/queries/task.query';
+} from '../database/queries/task.query';
 import {
   getInstructorTaskAnswerQuery,
   getOneTaskAnswerQuery,
-} from 'src/database/queries/task-answer.query';
-import { getLastSemeterQuery } from 'src/database/queries/semester.query';
+} from '../database/queries/task-answer.query';
+import { getLastSemeterQuery } from '../database/queries/semester.query';
 
 export async function getLectureFilePromisesQuery(
   lecture_File_ID: string,

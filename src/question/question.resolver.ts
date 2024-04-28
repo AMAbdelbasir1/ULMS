@@ -8,12 +8,12 @@ import {
   QuestionUpdateInput,
   QuestionsInput,
 } from './question.input';
-import { CurrentUser } from 'src/user/user.input';
+import { CurrentUser } from '../user/user.input';
 import { UseGuards } from '@nestjs/common';
-import { Roles } from 'src/auth/decorator/role.decorator';
-import { AuthGuard } from 'src/auth/guard/auth.guard';
-import { RolesGuard } from 'src/auth/guard/roles.guard';
-import { GetCurrentUser } from 'src/auth/decorator/user.decorator';
+import { Roles } from '../auth/decorator/role.decorator';
+import { AuthGuard } from '../auth/guard/auth.guard';
+import { RolesGuard } from '../auth/guard/roles.guard';
+import { GetCurrentUser } from '../auth/decorator/user.decorator';
 
 @Resolver()
 export class QuestionResolver {

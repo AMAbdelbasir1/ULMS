@@ -3,10 +3,10 @@ import { RoleService } from './role.service';
 import { RoleResolver } from './role.resolver';
 import { DatabaseModule } from 'src/database/database.module';
 import { RoleValidation } from './role.validation';
-import { AuthModule } from 'src/auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
-  imports: [DatabaseModule,AuthModule],
+  imports: [DatabaseModule, AuthModule],
   providers: [RoleService, RoleResolver, RoleValidation],
 })
 export class RoleModule {}

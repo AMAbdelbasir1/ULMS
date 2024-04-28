@@ -1,4 +1,4 @@
-import { QueryResult } from 'src/database/database.entity';
+import { QueryResult } from '../database/database.entity';
 
 export function createFacultyCheckQuery(
   resultFacultyPromise: [QueryResult, QueryResult],

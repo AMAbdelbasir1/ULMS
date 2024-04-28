@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { DatabaseService } from 'src/database/database.service';
-import { CurrentUser } from 'src/user/user.input';
+import { DatabaseService } from '../database/database.service';
+import { CurrentUser } from '../user/user.input';
 import {
   createInstructorsCourseCheckQuery,
   deleteInstructorCourseCheckQuery,
@@ -16,10 +16,10 @@ import {
   deleteInstructorCourseQuery,
   getInstructorsCourseQuery,
   insertInstructorCourseQuery,
-} from 'src/database/queries/instructor-course.query';
-import { handleError } from 'src/utils/graph.error';
+} from '../database/queries/instructor-course.query';
+import { handleError } from '../utils/graph.error';
 import { errorMessage } from './message.error';
-import { getSemesterCourseQuery } from 'src/database/queries/course-semester.query';
+import { getSemesterCourseQuery } from '../database/queries/course-semester.query';
 import {
   DeleteInstructorCourseInput,
   InstructorsCourseInput,

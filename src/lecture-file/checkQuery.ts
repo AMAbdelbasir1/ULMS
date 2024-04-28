@@ -1,5 +1,5 @@
-import { CurrentUser } from 'src/user/user.input';
-import { QueryResult } from 'src/database/database.entity';
+import { CurrentUser } from '../user/user.input';
+import { QueryResult } from '../database/database.entity';
 
 export function getLectureFilesCheckQuery(
   resultPromises: [QueryResult, QueryResult, QueryResult],
@@ -66,4 +66,3 @@ export function updateLectureFileCheckQuery(
     throw 'UNAUTHORIZED';
   }
 }
-

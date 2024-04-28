@@ -2,34 +2,34 @@ import { Injectable } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
 import * as bcrypt from 'bcryptjs';
 
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../database/database.service';
 import {
   CurrentUser,
   UpdateUserInput,
   UserFilterInput,
   CreateUserInput,
 } from './user.input';
-import { handleError } from 'src/utils/graph.error';
+import { handleError } from '../utils/graph.error';
 import {
   createUsersQuery,
   deleteUserQuery,
   getOneUserWithRoleQuery,
   updateUserQuery,
-} from 'src/database/queries/user.query';
+} from '../database/queries/user.query';
 import {
   deleteUserRolesQuery,
   insertUserRoleQuery,
-} from 'src/database/queries/user-role.query';
+} from '../database/queries/user-role.query';
 import {
   deleteOneStudentInformationQuery,
   insertStudentInformationQuery,
   updateStudentInformationQuery,
-} from 'src/database/queries/student-information.query';
-import { deleteFile, saveImage } from 'src/utils';
+} from '../database/queries/student-information.query';
+import { deleteFile, saveImage } from '../utils';
 import { errorMessage } from './message.error';
 import { createPromisesQuery, updatePromisesQuery } from './promisesQuery';
 import { createCheckQuery, updateCheckQuery } from './checkQuery';
-import { QueryResult } from 'src/database/database.entity';
+import { QueryResult } from '../database/database.entity';
 import { getFacultyUser, getUsers, transformUsers } from './user.helper';
 
 @Injectable()
@@ -89,11 +89,7 @@ export class UserService {
         createUserInput.Faculty_ID = null;
       }
 
-      createCheckQuery(
-        resultPromisesQuery,
-        createUserInput,
-        currentUser,
-      );
+      createCheckQuery(resultPromisesQuery, createUserInput, currentUser);
 
       createUserInput.password = await bcrypt.hash(
         createUserInput.password,

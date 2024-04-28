@@ -1,9 +1,9 @@
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../database/database.service';
 import {
   getOneCourseQuery,
   getCourseByNameQuery,
-} from 'src/database/queries/course.query';
-import { CurrentUser } from 'src/user/user.input';
+} from '../database/queries/course.query';
+import { CurrentUser } from '../user/user.input';
 
 export async function updateCoursePromisesQuery(
   updateCourseInput: { course_ID: string; name?: string; hours?: number },

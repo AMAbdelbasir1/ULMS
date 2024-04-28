@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
 
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../database/database.service';
 import {
   AnswerUpdateInput,
   QuestionFilterInput,
   QuestionInput,
   QuestionUpdateInput,
 } from './question.input';
-import { CurrentUser } from 'src/user/user.input';
+import { CurrentUser } from '../user/user.input';
 import {
   getQuestionsPromisesQuery,
   insertQuestionsPromisesQuery,
@@ -23,7 +23,7 @@ import {
   updateQuestionsCheckQuery,
 } from './checkQuery';
 import { errorMessage } from './message.error';
-import { handleError } from 'src/utils';
+import { handleError } from '../utils';
 import {
   deleteAnswersQuery,
   deleteOneAnswerQuery,
@@ -34,9 +34,9 @@ import {
   updateAnswerQuery,
   updateIsCorrectAnswerQuery,
   updateQuestionQuery,
-} from 'src/database/queries/question&answers.query';
-import { updateQuizQuery } from 'src/database/queries/quiz.query';
-import { updateGradeQuizAnswer } from 'src/database/queries/quiz_answers.query';
+} from '../database/queries/question&answers.query';
+import { updateQuizQuery } from '../database/queries/quiz.query';
+import { updateGradeQuizAnswer } from '../database/queries/quiz_answers.query';
 import { formatQuestionsWithAnswer } from './format';
 
 @Injectable()

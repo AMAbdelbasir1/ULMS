@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
 
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../database/database.service';
 import {
   CourseFilterInput,
   CourseInput,
@@ -14,9 +14,9 @@ import {
   getOneCourseQuery,
   insertCourseQuery,
   updateCourseQuery,
-} from 'src/database/queries/course.query';
-import { deleteFile, handleError, saveImage } from 'src/utils';
-import { CurrentUser } from 'src/user/user.input';
+} from '../database/queries/course.query';
+import { deleteFile, handleError, saveImage } from '../utils';
+import { CurrentUser } from '../user/user.input';
 import { errorMessage } from './message.error';
 import { updateCoursePromisesQuery } from './promisesQuery';
 import { deleteCourseCheckQuery, updateCourseCheckQuery } from './checkQuery';

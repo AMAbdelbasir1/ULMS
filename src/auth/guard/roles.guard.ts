@@ -7,7 +7,7 @@ import {
 import { Reflector } from '@nestjs/core';
 
 import { ROLES_KEY } from '../decorator/role.decorator';
-import { graphqlError } from 'src/utils/graph.error';
+import { graphqlError } from '../../utils/graph.error';
 @Injectable()
 export class RolesGuard implements CanActivate {
   constructor(private reflector: Reflector) {}

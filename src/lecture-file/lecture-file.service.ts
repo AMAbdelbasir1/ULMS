@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
 
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../database/database.service';
 import {
   SavedFile,
   deleteFile,
   handleError,
   validateAndSaveFiles,
-} from 'src/utils';
+} from '../utils';
 import { errorMessage } from './message.error';
-import { CurrentUser } from 'src/user/user.input';
+import { CurrentUser } from '../user/user.input';
 import {
   LectureFileFilterInput,
   LectureFileInput,
@@ -30,7 +30,7 @@ import {
   getLecturesFilesCourseQuery,
   insertLectureFileQuery,
   updateLectureFileQuery,
-} from 'src/database/queries/lecture-file.query';
+} from '../database/queries/lecture-file.query';
 
 @Injectable()
 export class LectureFileService {

@@ -6,9 +6,9 @@ import {
   Logger,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { DatabaseService } from 'src/database/database.service';
-import { getOneUserWithRoleQuery } from 'src/database/queries/user.query';
-import { graphqlError } from 'src/utils/graph.error';
+import { DatabaseService } from '../../database/database.service';
+import { getOneUserWithRoleQuery } from '../../database/queries/user.query';
+import { graphqlError } from '../../utils/graph.error';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

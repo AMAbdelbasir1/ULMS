@@ -1,6 +1,6 @@
-import { CurrentUser } from 'src/user/user.input';
+import { CurrentUser } from '../user/user.input';
 import { SemesterInput, UpdateSemesterInput } from './semester.input';
-import { QueryResult } from 'src/database/database.entity';
+import { QueryResult } from '../database/database.entity';
 
 export function createSemesterCheckQuery(
   resultPromises: [QueryResult, QueryResult],

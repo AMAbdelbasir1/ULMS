@@ -1,7 +1,7 @@
 import {
   getStudentsUserQuery,
   getUsersQuery,
-} from 'src/database/queries/user.query';
+} from '../database/queries/user.query';
 import { UserFilterInput } from './user.input';
 
 export function getFacultyUser(filterInput: UserFilterInput) {

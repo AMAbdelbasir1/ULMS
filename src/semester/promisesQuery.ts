@@ -1,11 +1,11 @@
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../database/database.service';
 import {
   getLastSemeterQuery,
   getOneSemeterQuery,
   getSemetersPerYearQuery,
-} from 'src/database/queries/semester.query';
+} from '../database/queries/semester.query';
 
-import { CurrentUser } from 'src/user/user.input';
+import { CurrentUser } from '../user/user.input';
 import { SemesterInput, UpdateSemesterInput } from './semester.input';
 
 export async function createSemesterPromisesQuery(

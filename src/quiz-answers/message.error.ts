@@ -1,4 +1,4 @@
-import { ErrorMessage } from 'src/utils';
+import { ErrorMessage } from '../utils';
 
 export const errorMessage: ErrorMessage = {
   QUIZ_NOT_FOUND: { message: 'Quiz not found.', code: '404' },

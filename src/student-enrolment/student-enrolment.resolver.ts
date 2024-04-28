@@ -1,11 +1,11 @@
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { StudentEnrolmentService } from './student-enrolment.service';
 import { UseGuards } from '@nestjs/common';
-import { Roles } from 'src/auth/decorator/role.decorator';
-import { GetCurrentUser } from 'src/auth/decorator/user.decorator';
-import { AuthGuard } from 'src/auth/guard/auth.guard';
-import { RolesGuard } from 'src/auth/guard/roles.guard';
-import { CurrentUser } from 'src/user/user.input';
+import { Roles } from '../auth/decorator/role.decorator';
+import { GetCurrentUser } from '../auth/decorator/user.decorator';
+import { AuthGuard } from '../auth/guard/auth.guard';
+import { RolesGuard } from '../auth/guard/roles.guard';
+import { CurrentUser } from '../user/user.input';
 import {
   DeleteStudentEnrolmentInput,
   StudentEnrolmentInput,

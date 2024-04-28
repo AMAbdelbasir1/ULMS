@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { LectureResolver } from './lecture.resolver';
 import { LectureService } from './lecture.service';
-import { DatabaseModule } from 'src/database/database.module';
+import { DatabaseModule } from '../database/database.module';
 import { LectureValidation } from './lecture.validation';
 
 @Module({

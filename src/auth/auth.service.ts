@@ -3,9 +3,9 @@ import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 
 import { LoginInput } from './auth.input';
-import { DatabaseService } from 'src/database/database.service';
-import { getOneUserEmailQuery } from 'src/database/queries/user.query';
-import { graphqlError } from 'src/utils';
+import { DatabaseService } from '../database/database.service';
+import { getOneUserEmailQuery } from '../database/queries/user.query';
+import { graphqlError } from '../utils';
 
 @Injectable()
 export class AuthService {

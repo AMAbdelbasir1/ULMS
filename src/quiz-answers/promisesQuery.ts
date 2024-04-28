@@ -1,15 +1,15 @@
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../database/database.service';
 
 import {
   getInstructorQuizQuery,
   getOneQuizQuery,
   getStudentQuizQuery,
-} from 'src/database/queries/quiz.query';
+} from '../database/queries/quiz.query';
 import {
   getOneAnswerQuery,
   getOneInstructorQuestionAnswerQuery,
   getOneQuestionQuery,
-} from 'src/database/queries/question&answers.query';
+} from '../database/queries/question&answers.query';
 import { QuizAnswerUpdateInput } from './quiz-answers.input';
 import {
   getInstructorSubmitQuery,
@@ -17,10 +17,10 @@ import {
   getOneStudentQuizAnswerQuery,
   getOneStudentSubmitQuery,
   getOneSubmitQuery,
-} from 'src/database/queries/quiz_answers.query';
-import { CurrentUser } from 'src/user/user.input';
-import { getSemesterCourseQuery } from 'src/database/queries/course-semester.query';
-import { getOneStudentEnrolmentQuery } from 'src/database/queries/student-enrolment.query';
+} from '../database/queries/quiz_answers.query';
+import { CurrentUser } from '../user/user.input';
+import { getSemesterCourseQuery } from '../database/queries/course-semester.query';
+import { getOneStudentEnrolmentQuery } from '../database/queries/student-enrolment.query';
 
 export async function getQuizAnswersPromisesQuery(
   quiz_ID: string,

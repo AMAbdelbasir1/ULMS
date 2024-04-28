@@ -1,5 +1,5 @@
 import { Field, ID, InputType } from '@nestjs/graphql';
-import { FileUpload } from 'src/utils/file.utils';
+import { FileUpload } from '../utils/file.utils';
 import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
 @InputType()
 export class TaskAnswerInput {

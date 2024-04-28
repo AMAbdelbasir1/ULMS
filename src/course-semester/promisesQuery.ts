@@ -1,11 +1,11 @@
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../database/database.service';
 import {
   getOneSemesterCourseQuery,
   getSemesterCourseQuery,
 } from 'src/database/queries/course-semester.query';
 
 export async function updateCourseSemesterPromisesQuery(
-  updateCourseSemester: { cycle_ID: string; },
+  updateCourseSemester: { cycle_ID: string },
   conn: DatabaseService,
 ) {
   return Promise.all([

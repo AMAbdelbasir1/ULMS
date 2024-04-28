@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../database/database.service';
 import {
   QuizAnswerFilterInput,
   QuizAnswerInput,
   QuizAnswerUpdateInput,
 } from './quiz-answers.input';
-import { handleError } from 'src/utils';
-import { CurrentUser } from 'src/user/user.input';
+import { handleError } from '../utils';
+import { CurrentUser } from '../user/user.input';
 import { errorMessage } from './message.error';
 import {
   checkQuestionsAndAnswersPromisesQuery,
@@ -25,7 +25,7 @@ import {
   submitQuizAnswersCheckQuery,
   updateQuizAnswersCheckQuery,
 } from './checkQuery';
-import { QueryResult } from 'src/database/database.entity';
+import { QueryResult } from '../database/database.entity';
 import {
   getAllStudentsSubmitedQuery,
   getStudentCourseQuizzesSubmitQuery,
@@ -35,9 +35,9 @@ import {
   sumStudentQuizGrade,
   updateStudentQuizAnswerQuery,
   updateStudentQuizSubmit,
-} from 'src/database/queries/quiz_answers.query';
-import { insertAnswerQuery } from 'src/database/queries/question&answers.query';
-import { getOneQuizQuery } from 'src/database/queries/quiz.query';
+} from '../database/queries/quiz_answers.query';
+import { insertAnswerQuery } from '../database/queries/question&answers.query';
+import { getOneQuizQuery } from '../database/queries/quiz.query';
 
 @Injectable()
 export class QuizAnswersService {

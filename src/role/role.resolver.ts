@@ -3,9 +3,9 @@ import { RoleService } from './role.service';
 import { RoleType } from './role.type';
 import { RoleFilterInput, RoleInput, RoleUpdateInput } from './role.input';
 import { UseGuards } from '@nestjs/common';
-import { AuthGuard } from 'src/auth/guard/auth.guard';
-import { RolesGuard } from 'src/auth/guard/roles.guard';
-import { Roles } from 'src/auth/decorator/role.decorator';
+import { AuthGuard } from '../auth/guard/auth.guard';
+import { RolesGuard } from '../auth/guard/roles.guard';
+import { Roles } from '../auth/decorator/role.decorator';
 import { RoleValidation } from './role.validation';
 
 @Resolver()

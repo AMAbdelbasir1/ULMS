@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { QuestionService } from './question.service';
 import { QuestionResolver } from './question.resolver';
-import { DatabaseModule } from 'src/database/database.module';
+import { DatabaseModule } from '../database/database.module';
 import { QuestionValidation } from './question.validation';
 
 @Module({

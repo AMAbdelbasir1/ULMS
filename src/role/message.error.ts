@@ -1,4 +1,4 @@
-import { ErrorMessage } from 'src/utils';
+import { ErrorMessage } from '../utils';
 
 export const errorMessage: ErrorMessage = {
   EXISTS_ROLE: {
@@ -11,5 +11,3 @@ export const errorMessage: ErrorMessage = {
   },
   ENTER_DATA: { message: 'Data missing', code: '400' },
 };
-/**
- */

@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../database/database.service';
 import { v4 as uuid } from 'uuid';
 import { universityUpdateInput } from './university.input';
-import { FileUpload, deleteFile, handleError, saveImage } from 'src/utils';
+import { FileUpload, deleteFile, handleError, saveImage } from '../utils';
 import {
   deleteOneUniversityQuery,
   getAllUniversityQuery,
@@ -12,7 +12,7 @@ import {
   insertUniversityQuery,
   updateUniversityQuery,
 } from '../database/queries/university.query';
-import { getAllFacultyQuery } from 'src/database/queries/faculty.query';
+import { getAllFacultyQuery } from '../database/queries/faculty.query';
 import { errorMessage } from './message.error';
 
 @Injectable()

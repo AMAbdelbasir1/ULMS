@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
 
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../database/database.service';
 import {
   deleteOneDepartmentQuery,
   getAllDepartmentQuery,
@@ -9,14 +9,14 @@ import {
   getOneDepartmentQuery,
   insertDepartmentQuery,
   updateDepartmentQuery,
-} from 'src/database/queries/department.query';
+} from '../database/queries/department.query';
 import {
   DepartmentFilterInput,
   DepartmentInput,
   DepartmentUpdateInput,
 } from './department.input';
-import { handleError } from 'src/utils/graph.error';
-import { CurrentUser } from 'src/user/user.input';
+import { handleError } from '../utils/graph.error';
+import { CurrentUser } from '../user/user.input';
 import { errorMessage } from './message.error';
 import { updateDepartmentPromisesQuery } from './promisesQuery';
 import {

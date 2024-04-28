@@ -1,11 +1,11 @@
 import { Controller, Get, Param, Res, Req, UseGuards } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { FilesService } from './files.service';
-import { Roles } from 'src/auth/decorator/role.decorator';
-import { AuthRouteGuard } from 'src/auth/guard/auth.guard';
-import { RolesRouteGuard } from 'src/auth/guard/roles.guard';
-import { GetCurrentUser } from 'src/auth/decorator/user.decorator';
-import { CurrentUser } from 'src/user/user.input';
+import { Roles } from '../auth/decorator/role.decorator';
+import { AuthRouteGuard } from '../auth/guard/auth.guard';
+import { RolesRouteGuard } from '../auth/guard/roles.guard';
+import { GetCurrentUser } from '../auth/decorator/user.decorator';
+import { CurrentUser } from '../user/user.input';
 import { FilesFtpService } from './filesFtp.service';
 
 @Controller('files')

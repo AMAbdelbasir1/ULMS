@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { DatabaseService } from 'src/database/database.service';
-import { CurrentUser } from 'src/user/user.input';
+import { DatabaseService } from '../database/database.service';
+import { CurrentUser } from '../user/user.input';
 import {
   DeleteStudentEnrolmentInput,
   StudentEnrolmentInput,
 } from './student-enrolment.input';
-import { getSemesterCourseQuery } from 'src/database/queries/course-semester.query';
+import { getSemesterCourseQuery } from '../database/queries/course-semester.query';
 import {
   deleteStudentEnrolmentQuery,
   getStudentsEnrolmentQuery,
   insertStudentEnrolmentQuery,
-} from 'src/database/queries/student-enrolment.query';
-import { handleError } from 'src/utils';
+} from '../database/queries/student-enrolment.query';
+import { handleError } from '../utils';
 import { errorMessage } from './message.error';
 import {
   createStudentsEnrolmentPromisesQuery,

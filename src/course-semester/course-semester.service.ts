@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
 
-import { DatabaseService } from 'src/database/database.service';
-import { CurrentUser } from 'src/user/user.input';
+import { DatabaseService } from '../database/database.service';
+import { CurrentUser } from '../user/user.input';
 import {
   CourseSemesterFilterInput,
   CourseSemesterInput,
   CourseSemesterUpdateInput,
 } from './course-semester.input';
-import { handleError } from 'src/utils';
+import { handleError } from '../utils';
 import {
   deleteOneSemesterCourseQuery,
   getInstructorSemesterCoursesQuery,

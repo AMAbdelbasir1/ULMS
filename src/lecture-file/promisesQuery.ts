@@ -1,15 +1,15 @@
-import { DatabaseService } from 'src/database/database.service';
-import { CurrentUser } from 'src/user/user.input';
+import { DatabaseService } from '../database/database.service';
+import { CurrentUser } from '../user/user.input';
 import {
   getOneInstructorLectureQuery,
   getOneLectureQuery,
   getOneSemesterLectureQuery,
   getOneStudentEnrolmentLectureQuery,
-} from 'src/database/queries/lecture.query';
+} from '../database/queries/lecture.query';
 import {
   getOneInstructorLectureFileQuery,
   getOneLectureFileQuery,
-} from 'src/database/queries/lecture-file.query';
+} from '../database/queries/lecture-file.query';
 
 export async function getLectureFilesPromisesQuery(
   lecture_ID: string,

@@ -1,6 +1,6 @@
 import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
 import * as ftp from 'promise-ftp';
-import {config} from 'dotenv';
+import { config } from 'dotenv';
 import {
   FileUpload,
   SavedFile,
@@ -33,10 +33,10 @@ export class FtpTestService implements OnModuleInit, OnModuleDestroy {
   private async connectToFtp(): Promise<void> {
     config();
     await this.ftpClient.connect({
-      host:  process.env.FTP_HOST,
+      host: process.env.FTP_HOST,
       port: 21,
-      user:  process.env.FTP_USER,
-      password:  process.env.FTP_PASSWORD,
+      user: process.env.FTP_USER,
+      password: process.env.FTP_PASSWORD,
     });
   }
 

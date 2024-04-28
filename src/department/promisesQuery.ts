@@ -1,11 +1,10 @@
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../database/database.service';
 import {
   getOneDepartmentQuery,
-  getDepartmentByFacultyQuery,
   getDepartmentByNameQuery,
-} from 'src/database/queries/department.query';
+} from '../database/queries/department.query';
 
-import { CurrentUser } from 'src/user/user.input';
+import { CurrentUser } from '../user/user.input';
 
 export async function updateDepartmentPromisesQuery(
   updateDepartmentInput,

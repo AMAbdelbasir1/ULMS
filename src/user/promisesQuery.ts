@@ -1,14 +1,14 @@
-import { DatabaseService } from 'src/database/database.service';
-import { getDepartmentByFacultyQuery } from 'src/database/queries/department.query';
-import { getOneRoleQuery } from 'src/database/queries/role.query';
+import { DatabaseService } from '../database/database.service';
+import { getDepartmentByFacultyQuery } from '../database/queries/department.query';
+import { getOneRoleQuery } from '../database/queries/role.query';
 import {
   getOneUserWithRoleQuery,
   getOneUserEmailQuery,
   getOneUserPhoneQuery,
-} from 'src/database/queries/user.query';
+} from '../database/queries/user.query';
 import { CreateUserInput } from './user.input';
 import { UpdateUserInput } from './user.input';
-import { getOneFacultyQuery } from 'src/database/queries/faculty.query';
+import { getOneFacultyQuery } from '../database/queries/faculty.query';
 
 export async function createPromisesQuery(
   newUser: CreateUserInput,

@@ -3,7 +3,7 @@ import {
   SavedFile,
   extractFileName,
   validateFileSize,
-} from 'src/utils/file.utils';
+} from '../utils/file.utils';
 import * as ftp from 'promise-ftp';
 import { config } from 'dotenv';
 

@@ -1,19 +1,18 @@
-import { DatabaseService } from 'src/database/database.service';
-import { CurrentUser } from 'src/user/user.input';
+import { DatabaseService } from '../database/database.service';
+import { CurrentUser } from '../user/user.input';
 
 import {
   getInstructorQuizQuery,
   getOneQuizQuery,
   getStudentQuizQuery,
-} from 'src/database/queries/quiz.query';
+} from '../database/queries/quiz.query';
 import {
   getInstructorQuestionQuery,
   getOneAnswerQuery,
   getOneInstructorQuestionAnswerQuery,
   getOneQuestionQuery,
-  getQuestionsAndAnswerQuery,
   getQuizQuestionQuery,
-} from 'src/database/queries/question&answers.query';
+} from '../database/queries/question&answers.query';
 
 export async function getQuestionsPromisesQuery(
   quiz_ID: string,

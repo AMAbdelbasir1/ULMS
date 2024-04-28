@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
-import { DatabaseService } from 'src/database/database.service';
-import { CurrentUser } from 'src/user/user.input';
+import { DatabaseService } from '../database/database.service';
+import { CurrentUser } from '../user/user.input';
 import {
   SemesterFilterInput,
   SemesterInput,
@@ -13,8 +13,8 @@ import {
   getOneSemeterQuery,
   insertSemesterQuery,
   updateSemesterQuery,
-} from 'src/database/queries/semester.query';
-import { handleError } from 'src/utils';
+} from '../database/queries/semester.query';
+import { handleError } from '../utils';
 import { errorMessage } from './message.error';
 import {
   createSemesterCheckQuery,

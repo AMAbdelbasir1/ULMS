@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { UniversityService } from './university.service';
-import { DatabaseModule } from 'src/database/database.module';
+import { DatabaseModule } from '../database/database.module';
 import { UniversityResolver } from './university.resolver';
 import { UniversityValidation } from './university.validation';
-import { AuthModule } from 'src/auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [DatabaseModule, AuthModule],

@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
 import { config } from 'dotenv';
-config();
 
-import { DatabaseService } from 'src/database/database.service';
-import { handleError } from 'src/utils/graph.error';
+import { DatabaseService } from '../database/database.service';
+import { handleError } from '../utils/graph.error';
 import { TaskFilterInput, TaskInput, TaskUpdateInput } from './task.input';
 import { errorMessage } from './message.error';
 import {
@@ -27,10 +26,12 @@ import {
   getStudentCoursesTasksQuery,
   insertTaskQuery,
   updateTaskQuery,
-} from 'src/database/queries/task.query';
-import { CurrentUser } from 'src/user/user.input';
+} from '../database/queries/task.query';
+import { CurrentUser } from '../user/user.input';
 import { TaskType } from './task.type';
-import { FtpTestService } from 'src/ftp-test/ftp-test.service';
+import { FtpTestService } from '../ftp-test/ftp-test.service';
+
+config();
 
 @Injectable()
 export class TaskService {

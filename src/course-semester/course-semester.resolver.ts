@@ -2,12 +2,12 @@ import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { CourseSemesterService } from './course-semester.service';
 import { CourseSemesterType } from './course-semester.type';
 import { CourseSemesterValidation } from './course-semester.validation';
-import { CurrentUser } from 'src/user/user.input';
+import { CurrentUser } from '../user/user.input';
 import { UseGuards } from '@nestjs/common';
-import { Roles } from 'src/auth/decorator/role.decorator';
-import { GetCurrentUser } from 'src/auth/decorator/user.decorator';
-import { AuthGuard } from 'src/auth/guard/auth.guard';
-import { RolesGuard } from 'src/auth/guard/roles.guard';
+import { Roles } from '../auth/decorator/role.decorator';
+import { GetCurrentUser } from '../auth/decorator/user.decorator';
+import { AuthGuard } from '../auth/guard/auth.guard';
+import { RolesGuard } from '../auth/guard/roles.guard';
 import {
   CourseSemesterFilterInput,
   CourseSemesterInput,

@@ -1,6 +1,6 @@
 import { Field, ID, InputType } from '@nestjs/graphql';
 import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
-import { FileUpload } from 'src/utils/file.utils';
+import { FileUpload } from '../utils/file.utils';
 
 @InputType()
 export class FacultyInput {

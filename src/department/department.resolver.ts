@@ -7,11 +7,11 @@ import {
   DepartmentUpdateInput,
 } from './department.input';
 import { UseGuards } from '@nestjs/common';
-import { Roles } from 'src/auth/decorator/role.decorator';
-import { AuthGuard } from 'src/auth/guard/auth.guard';
-import { RolesGuard } from 'src/auth/guard/roles.guard';
-import { GetCurrentUser } from 'src/auth/decorator/user.decorator';
-import { CurrentUser } from 'src/user/user.input';
+import { Roles } from '../auth/decorator/role.decorator';
+import { AuthGuard } from '../auth/guard/auth.guard';
+import { RolesGuard } from '../auth/guard/roles.guard';
+import { GetCurrentUser } from '../auth/decorator/user.decorator';
+import { CurrentUser } from '../user/user.input';
 import { DepartmentValidation } from './department.validation';
 
 @Resolver()

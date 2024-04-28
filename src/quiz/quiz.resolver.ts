@@ -1,14 +1,14 @@
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { QuizService } from './quiz.service';
-import { CurrentUser } from 'src/user/user.input';
+import { CurrentUser } from '../user/user.input';
 import { QuizFilterInput, QuizInput, QuizUpdateInput } from './quiz.input';
 import { QuizType } from './quiz.type';
 import { QuizValidation } from './quiz.validation';
 import { UseGuards } from '@nestjs/common';
-import { Roles } from 'src/auth/decorator/role.decorator';
-import { AuthGuard } from 'src/auth/guard/auth.guard';
-import { RolesGuard } from 'src/auth/guard/roles.guard';
-import { GetCurrentUser } from 'src/auth/decorator/user.decorator';
+import { Roles } from '../auth/decorator/role.decorator';
+import { AuthGuard } from '../auth/guard/auth.guard';
+import { RolesGuard } from '../auth/guard/roles.guard';
+import { GetCurrentUser } from '../auth/decorator/user.decorator';
 
 @Resolver()
 export class QuizResolver {

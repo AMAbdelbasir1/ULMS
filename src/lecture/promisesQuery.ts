@@ -1,12 +1,12 @@
-import { DatabaseService } from 'src/database/database.service';
-import { getSemesterCourseQuery } from 'src/database/queries/course-semester.query';
-import { getOneInstructorCourseQuery } from 'src/database/queries/instructor-course.query';
-import { CurrentUser } from 'src/user/user.input';
-import { getOneStudentEnrolmentQuery } from 'src/database/queries/student-enrolment.query';
+import { DatabaseService } from '../database/database.service';
+import { getSemesterCourseQuery } from '../database/queries/course-semester.query';
+import { getOneInstructorCourseQuery } from '../database/queries/instructor-course.query';
+import { CurrentUser } from '../user/user.input';
+import { getOneStudentEnrolmentQuery } from '../database/queries/student-enrolment.query';
 import {
   getOneInstructorLectureQuery,
   getOneLectureQuery,
-} from 'src/database/queries/lecture.query';
+} from '../database/queries/lecture.query';
 
 export async function getLecturesPromisesQuery(
   course_cycle_ID: string,

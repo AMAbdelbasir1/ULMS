@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
 
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../database/database.service';
 import {
   FacultyFilterInput,
   FacultyInput,
   FacultyUpdateInput,
 } from './faculty.input';
-import { deleteFile, handleError, saveImage } from 'src/utils';
+import { deleteFile, handleError, saveImage } from '../utils';
 
 import {
   deleteOneFacultyQuery,

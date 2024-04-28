@@ -4,12 +4,12 @@ import * as mime from 'mime-types';
 import * as rangeParser from 'range-parser';
 import { Response, Request } from 'express';
 
-import { DatabaseService } from 'src/database/database.service';
-import { handleRouteError } from 'src/utils/graph.error';
+import { DatabaseService } from '../database/database.service';
+import { handleRouteError } from '../utils/graph.error';
 import { errorMessage } from './message.error';
 import { getLectureFilePromisesQuery } from './promisesQuery';
-import { CurrentUser } from 'src/user/user.input';
-import { getOneUserQuery } from 'src/database/queries/user.query';
+import { CurrentUser } from '../user/user.input';
+import { getOneUserQuery } from '../database/queries/user.query';
 import { getLectureFileCheckQuery } from './checkQuery';
 @Injectable()
 export class FilesService {
@@ -71,8 +71,6 @@ export class FilesService {
     const fileStream = createReadStream('./' + filePath, { start, end });
     return { fileStream, headers };
   }
-
-
 
   private async getFilePath(fileid: string, currentUser: CurrentUser) {
     const resultPromises = await getLectureFilePromisesQuery(
