@@ -69,8 +69,11 @@ export class CourseResolver {
   @Mutation(() => String)
   @UseGuards(AuthGuard, RolesGuard)
   @Roles('ADMIN')
-  async deleteCourse(@Args('course_ID') course_ID: string): Promise<string> {
+  async deleteCourse(
+    @Args('course_ID') course_ID: string,
+    @GetCurrentUser() currentUser: CurrentUser,
+  ): Promise<string> {
     this.courseValidation.validateCourseUpdateInput({ course_ID });
-    return await this.courseService.deleteCourseService(course_ID);
+    return await this.courseService.deleteCourseService(course_ID, currentUser);
   }
 }

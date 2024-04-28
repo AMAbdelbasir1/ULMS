@@ -2,6 +2,7 @@ import { DatabaseService } from 'src/database/database.service';
 import {
   getOneDepartmentQuery,
   getDepartmentByFacultyQuery,
+  getDepartmentByNameQuery,
 } from 'src/database/queries/department.query';
 
 import { CurrentUser } from 'src/user/user.input';
@@ -16,7 +17,7 @@ export async function updateDepartmentPromisesQuery(
     (async () => {
       if (updateDepartmentInput.name) {
         return conn.query(
-          getDepartmentByFacultyQuery(
+          getDepartmentByNameQuery(
             updateDepartmentInput.name,
             currentUser.Faculty_ID,
           ),

@@ -19,7 +19,7 @@ import { deleteFile, handleError, saveImage } from 'src/utils';
 import { CurrentUser } from 'src/user/user.input';
 import { errorMessage } from './message.error';
 import { updateCoursePromisesQuery } from './promisesQuery';
-import { updateCourseCheckQuery } from './checkQuery';
+import { deleteCourseCheckQuery, updateCourseCheckQuery } from './checkQuery';
 
 @Injectable()
 export class CourseService {
@@ -42,7 +42,12 @@ export class CourseService {
       handleError(error, errorMessage);
     }
   }
-
+  /**
+   *
+   * @param courseInput
+   * @param currentUser
+   * @returns
+   */
   async createCourseService(
     courseInput: CourseInput,
     currentUser: CurrentUser,
@@ -69,12 +74,17 @@ export class CourseService {
       return 'Course created successfuly';
     } catch (error) {
       if (logoPath) {
-        await deleteFile(logoPath);
+        deleteFile('.' + logoPath);
       }
       handleError(error, errorMessage);
     }
   }
-
+  /**
+   *
+   * @param courseUpdateInput
+   * @param currentUser
+   * @returns
+   */
   async updateCourseService(
     courseUpdateInput: CourseUpdateInput,
     currentUser: CurrentUser,
@@ -82,7 +92,7 @@ export class CourseService {
     let logoPath: string;
     const { image, ...updateInput } = courseUpdateInput;
     try {
-      if (Object.keys(updateInput).length === 0 && !(await image)) {
+      if (Object.keys(updateInput).length === 1 && !(await image)) {
         throw 'ENTER_DATA';
       }
 
@@ -108,23 +118,31 @@ export class CourseService {
       return 'update faculty successfuly';
     } catch (error) {
       if (logoPath) {
-        await deleteFile(logoPath);
+        deleteFile('.' + logoPath);
       }
       handleError(error, errorMessage);
     }
   }
-
-  async deleteCourseService(course_ID: string): Promise<string> {
+  /**
+   *
+   * @param course_ID
+   * @param currentUser
+   * @returns
+   */
+  async deleteCourseService(
+    course_ID: string,
+    currentUser: CurrentUser,
+  ): Promise<string> {
     try {
       const existingCourse = await this.conn.query(
         getOneCourseQuery(course_ID),
       );
 
-      if (existingCourse.recordset.length === 0) {
-        throw 'COURSE_NOT_FOUND';
-      }
+      deleteCourseCheckQuery(existingCourse, currentUser);
 
       await this.conn.query(deleteOneCourseQuery(course_ID));
+
+      deleteFile('.' + existingCourse.recordset[0].image_path);
 
       return 'Course deleted successfuly';
     } catch (error) {

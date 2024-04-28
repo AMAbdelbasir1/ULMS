@@ -19,7 +19,10 @@ import { handleError } from 'src/utils/graph.error';
 import { CurrentUser } from 'src/user/user.input';
 import { errorMessage } from './message.error';
 import { updateDepartmentPromisesQuery } from './promisesQuery';
-import { updateDepartmentCheckQuery } from './checkQuery';
+import {
+  deleteDepartmentCheckQuery,
+  updateDepartmentCheckQuery,
+} from './checkQuery';
 
 @Injectable()
 export class DepartmentService {
@@ -118,14 +121,8 @@ export class DepartmentService {
         getOneDepartmentQuery(department_ID),
       );
 
-      if (existingDepartment.recordset.length === 0) {
-        throw 'DEPARTMENT_NOT_FOUND';
-      }
-      if (
-        existingDepartment.recordset[0].faculty_ID !== currentUser.Faculty_ID
-      ) {
-        throw 'UNAUTHORIZED';
-      }
+      deleteDepartmentCheckQuery(existingDepartment, currentUser);
+
       await this.conn.query(deleteOneDepartmentQuery(department_ID));
       return 'Department deleted successfuly';
     } catch (error) {

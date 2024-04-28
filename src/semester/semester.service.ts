@@ -1,6 +1,3 @@
-/**
- * This file contains the SemesterService class which is responsible for handling semester-related operations.
- */
 import { Injectable } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
 import { DatabaseService } from 'src/database/database.service';
@@ -13,19 +10,21 @@ import {
 import {
   deleteOneSemesterQuery,
   getAllSemestersQuery,
-  getLastSemeterQuery,
   getOneSemeterQuery,
-  getSemetersPerYearQuery,
   insertSemesterQuery,
   updateSemesterQuery,
 } from 'src/database/queries/semester.query';
-import { graphqlError } from 'src/utils';
+import { handleError } from 'src/utils';
 import { errorMessage } from './message.error';
 import {
   createSemesterCheckQuery,
   deleteSemesterCheckQuery,
   updateSemesterCheckQuery,
 } from './checkQuery';
+import {
+  createSemesterPromisesQuery,
+  updateSemesterPromisesQuery,
+} from './promisesQuery';
 
 @Injectable()
 export class SemesterService {
@@ -57,8 +56,7 @@ export class SemesterService {
 
       return semesters.recordset;
     } catch (error) {
-      console.log(error);
-      graphqlError('Something went wrong, Please try again', '500');
+      handleError(error, errorMessage);
     }
   }
 
@@ -69,17 +67,16 @@ export class SemesterService {
    * @param currentUser - The current user making the request.
    * @returns A success message indicating that the semester was created successfully.
    */
-  async createSemestersService(
+  async createSemesterService(
     semesterInput: SemesterInput,
     currentUser: CurrentUser,
   ) {
     try {
-      const resultPromises = await Promise.all([
-        this.conn.query(getLastSemeterQuery(currentUser.Faculty_ID)),
-        this.conn.query(
-          getSemetersPerYearQuery(currentUser.Faculty_ID, semesterInput.years),
-        ),
-      ]);
+      const resultPromises = await createSemesterPromisesQuery(
+        semesterInput,
+        this.conn,
+        currentUser,
+      );
 
       createSemesterCheckQuery(resultPromises, semesterInput);
 
@@ -93,15 +90,9 @@ export class SemesterService {
         }),
       );
 
-      return 'semester created successfully';
+      return 'Semester created successfully';
     } catch (error) {
-      if (error in errorMessage) {
-        const { message, code } = errorMessage[error];
-        graphqlError(message, code);
-      } else {
-        console.log(error);
-        graphqlError('Something went wrong, Please try again', '500');
-      }
+      handleError(error, errorMessage);
     }
   }
 
@@ -117,27 +108,23 @@ export class SemesterService {
     currentUser: CurrentUser,
   ) {
     try {
-      const { semester_ID, ...updateInput } = updateSemesterInput;
-
-      if (Object.keys(updateInput).length === 0) {
+      if (Object.keys(updateSemesterInput).length === 1) {
         throw 'ENTER_DATA';
       }
 
-      const semester = await this.conn.query(getOneSemeterQuery(semester_ID));
+      const resultPromise = await updateSemesterPromisesQuery(
+        updateSemesterInput,
+        this.conn,
+        currentUser,
+      );
 
-      updateSemesterCheckQuery(semester, updateSemesterInput, currentUser);
+      updateSemesterCheckQuery(resultPromise, updateSemesterInput, currentUser);
 
       await this.conn.query(updateSemesterQuery(updateSemesterInput));
 
       return 'Semester updated successfully';
     } catch (error) {
-      if (error in errorMessage) {
-        const { message, code } = errorMessage[error];
-        graphqlError(message, code);
-      } else {
-        console.log(error);
-        graphqlError('Something went wrong, Please try again', '500');
-      }
+      handleError(error, errorMessage);
     }
   }
 
@@ -158,13 +145,7 @@ export class SemesterService {
 
       return 'Semester deleted successfully';
     } catch (error) {
-      if (error in errorMessage) {
-        const { message, code } = errorMessage[error];
-        graphqlError(message, code);
-      } else {
-        console.log(error);
-        graphqlError('Something went wrong, Please try again', '500');
-      }
+      handleError(error, errorMessage);
     }
   }
 }

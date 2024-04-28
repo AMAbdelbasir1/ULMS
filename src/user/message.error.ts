@@ -16,6 +16,14 @@ export const errorMessage = {
     message: 'Faculty not found',
     code: '404',
   },
+  SAME_FACULTY_ID: {
+    message: 'User already exists with the same faculty',
+    code: '400',
+  },
+  STUDENT_INFORMATION_REQUIRED: {
+    message: 'Student information required',
+    code: '400',
+  },
   NOT_IMAGE: { message: 'File not image', code: '400' },
   ENTER_DATA: { message: 'Data missing', code: '400' },
 };

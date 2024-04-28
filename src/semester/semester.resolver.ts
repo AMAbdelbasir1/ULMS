@@ -1,12 +1,3 @@
-/**
- * This code is written in TypeScript and the file name is semester.resolver.ts.
- * It is a resolver class that handles GraphQL queries and mutations related to semesters.
- * The class uses various decorators such as Resolver, Query, Args, Mutation, UseGuards, and Roles from the '@nestjs/graphql' package.
- * It also imports other classes and types from different files such as SemesterService, SemesterType, SemesterFilterInput, SemesterInput, UpdateSemesterInput, GetCurrentUser, CurrentUser, AuthGuard, RolesGuard, and SemesterValidation.
- * The resolver class contains methods for retrieving, creating, updating, and deleting semesters.
- * Each method is decorated with appropriate guards and roles to ensure authentication and authorization.
- * The methods also perform validation on the input data using the SemesterValidation class before calling the corresponding service methods from the SemesterService class.
- */
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { SemesterService } from './semester.service';
 import { SemesterType } from './semester.type';
@@ -68,7 +59,7 @@ export class SemesterResolver {
     @GetCurrentUser() currentUser: CurrentUser,
   ) {
     this.semesterValidation.validateSemesterInput(semesterInput);
-    return await this.semesterService.createSemestersService(
+    return await this.semesterService.createSemesterService(
       semesterInput,
       currentUser,
     );

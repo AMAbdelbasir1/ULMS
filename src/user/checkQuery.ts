@@ -1,9 +1,10 @@
 import { QueryResult } from 'src/database/database.entity';
-import { CurrentUser } from './user.input';
+import { CreateUserInput, CurrentUser } from './user.input';
 
-export async function updateCheckQuery(
+export function updateCheckQuery(
   resultPromisesQuery: [QueryResult, QueryResult, QueryResult, QueryResult],
   currentUser: CurrentUser,
+  faculty_ID: string,
 ) {
   const [existingUser, existingEmail, existingPhone, existingDepartment] =
     resultPromisesQuery;
@@ -12,11 +13,17 @@ export async function updateCheckQuery(
     throw 'NOT_EXIST_USER';
   }
   if (
-    existingUser.recordset[0].Faculty_ID !== currentUser.Faculty_ID &&
+    (existingUser.recordset[0].Faculty_ID !== currentUser.Faculty_ID ||
+      faculty_ID) &&
     currentUser.roles.includes('ADMIN')
   ) {
     throw 'UNAUTHORIZED';
   }
+
+  if (existingUser.recordset[0].Faculty_ID == faculty_ID && faculty_ID) {
+    throw 'SAME_FACULTY_ID';
+  }
+
   if (existingEmail.recordset.length > 0) {
     throw 'EXIST_EMAIL';
   }
@@ -28,7 +35,7 @@ export async function updateCheckQuery(
   }
 }
 
-export async function createCheckQuery(
+export function createCheckQuery(
   resultPromisesQuery: [
     QueryResult,
     QueryResult,
@@ -36,7 +43,7 @@ export async function createCheckQuery(
     QueryResult,
     QueryResult,
   ],
-  Faculty_ID: string,
+  createUserInput: CreateUserInput,
   currentUser: CurrentUser,
 ) {
   const [
@@ -66,13 +73,6 @@ export async function createCheckQuery(
   }
 
   if (
-    resultPromisesQuery[0].recordset[0].name !== 'SUPERADMIN' &&
-    !Faculty_ID
-  ) {
-    throw 'FACULTY_REQUIRED';
-  }
-
-  if (
     existingRoleName !== 'SUPERADMIN' &&
     existingFaculty.recordset.length == 0 &&
     currentUser.roles.includes('SUPERADMIN')
@@ -86,6 +86,15 @@ export async function createCheckQuery(
 
   if (existingPhone.recordset.length > 0) {
     throw 'EXIST_PHONE';
+  }
+
+  if (
+    existingRoleName === 'STUDENT' &&
+    (!createUserInput.academic_ID ||
+      !createUserInput.level ||
+      !createUserInput.department_ID)
+  ) {
+    throw 'STUDENT_INFORMATION_REQUIRED';
   }
 
   if (existingDepartment.recordset.length == 0) {

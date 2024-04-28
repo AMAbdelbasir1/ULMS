@@ -4,7 +4,10 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class DepartmentValidation {
-  private static validateInput<T>(schema: Joi.ObjectSchema<T>, input?: T): void {
+  private static validateInput<T>(
+    schema: Joi.ObjectSchema<T>,
+    input?: T,
+  ): void {
     const { error } = schema.validate(input, { abortEarly: false });
 
     if (error) {
@@ -41,17 +44,10 @@ export class DepartmentValidation {
 
   validateDepartmentInput<T>(insertInput?: T): void {
     const schema = Joi.object({
-      faculty_ID: Joi.string()
-        .uuid({ version: ['uuidv4'] })
-        .required()
-        .messages({
-          'string.guid': 'faculty ID must be a valid UUID',
-          'any.required': 'faculty ID is required',
-        }),
-      name: Joi.string().required().min(10).messages({
+      name: Joi.string().required().min(2).messages({
         'any.required': 'Name of course is required',
         'string.empty': 'Name must not be empty',
-        'string.min': 'Name must be at least 10 characters',
+        'string.min': 'Name must be at least 2 characters',
       }),
     });
 
@@ -67,15 +63,9 @@ export class DepartmentValidation {
           'string.guid': 'Department ID must be a valid UUID',
           'any.required': 'Department ID is required',
         }),
-      faculty_ID: Joi.string()
-        .uuid({ version: ['uuidv4'] })
-        .optional()
-        .messages({
-          'string.guid': 'Faculty ID must be a valid UUID',
-        }),
-      name: Joi.string().optional().min(10).messages({
+      name: Joi.string().optional().min(2).messages({
         'string.empty': 'Name must not be empty',
-        'string.min': 'Name must be at least 10 characters',
+        'string.min': 'Name must be at least 2 characters',
       }),
     });
 

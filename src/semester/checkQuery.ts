@@ -7,7 +7,7 @@ export function createSemesterCheckQuery(
   semesterInput: SemesterInput,
 ) {
   const [lastSemester, semestersPerYear] = resultPromises;
-  if (semestersPerYear.recordset.length == 2) {
+  if (semestersPerYear.recordset.length == 3) {
     throw 'FULL_YEAR';
   }
   if (semestersPerYear.recordset.length > 0) {
@@ -32,21 +32,30 @@ export function createSemesterCheckQuery(
 }
 
 export function updateSemesterCheckQuery(
-  semester: QueryResult,
+  resultPromise: [QueryResult, QueryResult],
   updateSemesterInput: UpdateSemesterInput,
   currentUser: CurrentUser,
 ) {
-  if (semester.recordset.length === 0) {
+  const [existingSemester, existingLastSemester] = resultPromise;
+  if (existingSemester.recordset.length === 0) {
     throw 'SEMESTER_NOT_FOUND';
   }
-  if (semester.recordset[0].faculty_ID !== currentUser.Faculty_ID) {
+  if (existingSemester.recordset[0].faculty_ID !== currentUser.Faculty_ID) {
     throw 'UNAUTHORIZED';
   }
-  if (updateSemesterInput.start_date > semester.recordset[0].end_Date) {
+  if (updateSemesterInput.start_date > existingSemester.recordset[0].end_Date) {
     throw 'UNABLE_START_DATE';
   }
-  if (updateSemesterInput.end_date < semester.recordset[0].start_Date) {
+  if (updateSemesterInput.end_date < existingSemester.recordset[0].start_Date) {
     throw 'UNABLE_END_DATE';
+  }
+
+  if (
+    existingLastSemester.recordset[0].semester_ID !=
+      updateSemesterInput.semester_ID &&
+    (updateSemesterInput.end_date || updateSemesterInput.start_date)
+  ) {
+    throw 'UNABLE_CHANGE_DATE';
   }
 }
 

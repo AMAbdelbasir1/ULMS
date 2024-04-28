@@ -76,7 +76,7 @@ export class UserService {
       if (currentUser.roles.includes('ADMIN')) {
         createUserInput.Faculty_ID = currentUser.Faculty_ID;
       }
-      
+
       const resultPromisesQuery = await createPromisesQuery(
         createUserInput,
         this.conn,
@@ -88,10 +88,10 @@ export class UserService {
       ) {
         createUserInput.Faculty_ID = null;
       }
-      
-      await createCheckQuery(
+
+      createCheckQuery(
         resultPromisesQuery,
-        createUserInput.Faculty_ID,
+        createUserInput,
         currentUser,
       );
 
@@ -157,7 +157,11 @@ export class UserService {
         this.conn,
       );
 
-      await updateCheckQuery(resultPromisesQuery, currentUser);
+      updateCheckQuery(
+        resultPromisesQuery,
+        currentUser,
+        updateUserInput.Faculty_ID,
+      );
 
       if (updateUserInput.image_path) {
         imagePath = await saveImage(await updateUserInput.image_path, 'user');
@@ -177,6 +181,7 @@ export class UserService {
       const userInputQuery = updateUserQuery({
         user_ID: updateUserInput.user_ID,
         full_name: updateUserInput.full_name,
+        faculty_ID: updateUserInput.Faculty_ID,
         email: updateUserInput.email,
         phone: updateUserInput.phone,
         password: updateUserInput.password,
@@ -185,9 +190,9 @@ export class UserService {
 
       if (
         roles.includes('STUDENT') &&
-        updateUserInput.academic_ID &&
-        updateUserInput.level &&
-        updateUserInput.department_ID
+        (updateUserInput.academic_ID ||
+          updateUserInput.level ||
+          updateUserInput.department_ID)
       ) {
         const queries = [];
         queries.push(

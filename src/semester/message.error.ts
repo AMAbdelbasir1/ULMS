@@ -22,4 +22,8 @@ export const errorMessage = {
     code: '400',
   },
   ENTER_DATA: { message: 'Data missing', code: '400' },
+  UNABLE_CHANGE_DATE: {
+    message: 'Can not change date of semester',
+    code: '400',
+  },
 };

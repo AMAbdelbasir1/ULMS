@@ -99,7 +99,7 @@ export function updateSemesterQuery(updateInput: {
   sqlStr = sqlStr.replace(/,$/, '');
 
   return {
-    query: sqlStr + `WHERE semester_ID=@semester_ID;`,
+    query: sqlStr + ` WHERE semester_ID=@semester_ID;`,
     params: { ...updateInput },
   };
 }

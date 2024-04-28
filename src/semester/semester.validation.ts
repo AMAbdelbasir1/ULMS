@@ -27,7 +27,7 @@ export class SemesterValidation {
         'any.empty': 'Years must me not empty',
         'string.base': 'Year must be like this 2023 or 2023-2024',
       }),
-      number: Joi.number().integer().optional().min(1).max(2).messages({
+      number: Joi.number().integer().optional().min(1).max(3).messages({
         'number.integer': "semester's number must be an integer",
         'number.min': "semester's number must be at least 1",
         'number.max': "semester's number must be at least 1",
@@ -66,9 +66,9 @@ export class SemesterValidation {
         'number.min': 'years must be greater than or equal to 4',
         'any.required': "semseter's number is required",
       }),
-      number: Joi.number().integer().min(1).max(2).required().messages({
+      number: Joi.number().integer().min(1).max(3).required().messages({
         'number.min': 'must be greater than or equal to 1',
-        'number.max': "semseter's number must be less than or equal to 2",
+        'number.max': "semseter's number must be less than or equal to 3",
         'any.required': "semseter's number is required",
       }),
     });
@@ -104,9 +104,9 @@ export class SemesterValidation {
         'number.min': 'years must be greater than or equal to 4',
         'any.required': "semseter's number is required",
       }),
-      number: Joi.number().integer().min(1).max(2).optional().messages({
+      number: Joi.number().integer().min(1).max(3).optional().messages({
         'number.min': 'must be greater than or equal to 1',
-        'number.max': "semseter's number must be less than or equal to 2",
+        'number.max': "semseter's number must be less than or equal to 3",
         'any.required': "semseter's number is required",
       }),
     });
