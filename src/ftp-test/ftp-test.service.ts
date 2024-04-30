@@ -6,7 +6,7 @@ import {
   SavedFile,
   extractFileName,
   validateFileSize,
-} from 'src/utils/file.utils';
+} from '../utils/file.utils';
 
 @Injectable()
 export class FtpTestService implements OnModuleInit, OnModuleDestroy {

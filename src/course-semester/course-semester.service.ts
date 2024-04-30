@@ -18,13 +18,13 @@ import {
   getStudentSemesterCoursesQuery,
   insertSemesterCourseQuery,
   updateSemesterCourseQuery,
-} from 'src/database/queries/course-semester.query';
+} from '../database/queries/course-semester.query';
 import {
   getLastSemeterQuery,
   getOneSemeterQuery,
-} from 'src/database/queries/semester.query';
+} from '../database/queries/semester.query';
 import { errorMessage } from './message.error';
-import { getOneCourseQuery } from 'src/database/queries/course.query';
+import { getOneCourseQuery } from '../database/queries/course.query';
 
 @Injectable()
 export class CourseSemesterService {
