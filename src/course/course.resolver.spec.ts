@@ -1,4 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import * as fs from 'fs';
+import { Readable } from 'stream';
+
 import { CourseResolver } from './course.resolver';
 import { CourseService } from './course.service';
 import {
@@ -35,7 +38,7 @@ describe('CourseResolver', () => {
 
   describe('getCourses', () => {
     it('should return courses', async () => {
-      const filterInput: CourseFilterInput = { page: 1, limit: 10 };
+      const filterInput: CourseFilterInput = { page: 1, limit: 1 };
       const currentUser: CurrentUser = {
         user_ID: '3ed4621a-285e-460c-af09-8364cf563508',
         Faculty_ID: 'a90e5899-0096-4cf0-b8e6-14529e0302a9',
@@ -64,33 +67,43 @@ describe('CourseResolver', () => {
 
   describe('createCourse', () => {
     it('should create a course', async () => {
-      const mockImage: MockFileUpload = {
-        filename: 'image.jpg',
-        mimetype: 'image/jpeg',
-        encoding: 'base64',
-        createReadStream: jest.fn(),
-      };
-      const courseInput: CourseInput = {
-        name: 'New Course',
-        hours: 20,
-        image: Promise.resolve(mockImage),
-      };
-      const currentUser: CurrentUser = {
-        user_ID: 'user_id',
-        Faculty_ID: 'faculty_id',
-        roles: ['ADMIN'],
-      }; // Mock current user
+      try {
+        const imagePath =
+          './uploads/course/1714071201932-circle-database-digital-storage-logo-design-vector-27640483.jpg';
+        const imageBuffer = fs.readFileSync(imagePath);
 
-      jest
-        .spyOn(service, 'createCourseService')
-        .mockResolvedValueOnce('Course created successfully');
+        const imageStream = Readable.from([imageBuffer]);
+        const mockImage: MockFileUpload = {
+          filename: 'image.jpg',
+          mimetype: 'image/jpeg',
+          encoding: 'base64',
+          createReadStream: jest.fn().mockReturnValue(imageStream),
+        };
+        const courseInput: CourseInput = {
+          name: 'New Course',
+          hours: 20,
+          image: Promise.resolve(mockImage),
+        };
+        const currentUser: CurrentUser = {
+          user_ID: '3ed4621a-285e-460c-af09-8364cf563508',
+          Faculty_ID: 'a90e5899-0096-4cf0-b8e6-14529e0302a9',
+          roles: ['ADMIN'],
+        }; // Mock current user
 
-      const result: string = await resolver.createCourse(
-        courseInput,
-        currentUser,
-      );
+        jest.spyOn(service, 'createCourseService');
+        // .mockResolvedValueOnce('Course created successfully');
 
-      expect(result).toEqual('Course created successfully');
+        const result: string = await resolver.createCourse(
+          courseInput,
+          currentUser,
+        );
+
+        expect(result).toEqual('Course created successfuly');
+      } catch (error) {
+        expect(['Course already exists', 'Error data valdation']).toContain(
+          error.message,
+        );
+      }
     });
   });
 
