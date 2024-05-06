@@ -8,6 +8,11 @@ uploads/university/*
 uploads/lecture-files/*
 uploads/course/*
 
+Dockerfile
+.dockerignore
+docker-compose*
+
+Dockercommand.txt
 notes
 .env
 # Logs

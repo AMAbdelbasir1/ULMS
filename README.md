@@ -41,6 +41,12 @@ The University Learning Management System (ULMS) is a comprehensive platform bui
 ## Documentation and Testing
 
 - Access the GraphQL interactive documentation and perform test queries at: `http://localhost:3000/graphql`
+- Access documentation live demo : `https://universal-michaelina-one4zero.koyeb.app/graphql`
+
+Use this account to can test :
+- **Username:** superadmin@gmail.com
+- **Password:** Sup3r@dmin
+
 - Stream files from the local server:
 
   - Profile images: `GET /files/image/:imageid`
