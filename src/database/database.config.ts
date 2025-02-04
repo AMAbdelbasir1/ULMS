@@ -10,4 +10,9 @@ export const databaseConfig: sql.config = {
     encrypt: true,
   },
   trustServerCertificate: true,
+  pool: {
+    max: process.env.DB_POOL_MAX ? parseInt(process.env.DB_POOL_MAX) : 10,
+    min: process.env.DB_POOL_MIN ? parseInt(process.env.DB_POOL_MIN) : 0,
+    idleTimeoutMillis: 30000,
+  },
 };
