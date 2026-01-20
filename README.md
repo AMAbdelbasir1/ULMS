@@ -1,100 +1,172 @@
 # University Learning Management System (ULMS)
 
-The University Learning Management System (ULMS) is a comprehensive platform built with NestJS and GraphQL, designed to facilitate the management of university academic activities. It features a multi-role system that allows for granular control over various functionalities within the university and faculty context.
+[![License: UNLICENSED](https://img.shields.io/badge/License-UNLICENSED-yellow.svg)](https://opensource.org/licenses/UNLICENSED)
+[![Node.js Version](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
+[![NestJS](https://img.shields.io/badge/NestJS-10.0.0-red.svg)](https://nestjs.com/)
 
-## Key Features
+The University Learning Management System (ULMS) is a comprehensive, scalable platform built with NestJS and GraphQL, designed to streamline university academic activities. It provides a multi-role architecture enabling granular access control for superadmins, admins, doctors, assistants, and students, facilitating efficient management of courses, lectures, quizzes, tasks, and user enrollments.
 
-- **Superadmin Role**
+## Features
 
-  - Create and manage other superadmin and admin accounts.
-  - Add and manage universities and faculties.
-  - Assign admins to specific faculties.
+### Role-Based Access Control
 
-- **Admin Role**
+- **Superadmin**: Manage superadmin and admin accounts, universities, faculties, and admin assignments.
+- **Admin**: Handle faculty-specific user accounts, course creation, semester organization, and user enrollments.
+- **Doctor**: Create and manage lectures, upload lecture files, and develop quizzes and tasks.
+- **Assistant**: Support course management with restricted editing capabilities, manage lab files, and create labs.
+- **Student**: Access enrolled courses, download resources, participate in quizzes, and submit tasks.
 
-  - Manage faculty-specific accounts (doctors, assistants, students).
-  - Create and manage courses.
-  - Organize semesters and assign courses to them.
-  - Enroll doctors, assistants, and students in courses.
+### Core Functionality
 
-- **Doctor Role**
+- **User Management**: Secure account creation, authentication, and role assignment.
+- **Course Management**: Comprehensive course creation, enrollment, and organization by semesters.
+- **Content Delivery**: Lecture and lab file uploads, streaming, and management (local and FTP support).
+- **Assessment Tools**: Quiz creation, task assignments, and submission handling.
+- **File Handling**: Support for profile images, lecture files, and task submissions with FTP integration.
 
-  - Create and manage lectures.
-  - Upload and manage lecture files.
-  - Create and manage quizzes and tasks.
+### Technical Highlights
 
-- **Assistant Role**
+- **GraphQL API**: Efficient, flexible queries with Apollo Server integration.
+- **Database**: Microsoft SQL Server for robust data management.
+- **Authentication**: JWT-based secure authentication with Passport.js.
+- **File Uploads**: GraphQL multipart uploads with size and count limits.
+- **Validation**: Joi-based input validation for data integrity.
 
-  - Assist in course management with restrictions.
-  - Upload and manage lab files (cannot edit doctor's content).
-  - Create labs and manage lab-specific files.
+## Prerequisites
 
-- **Student Role**
-
-  - Access enrolled courses.
-  - Download lecture and lab files.
-  - Participate in quizzes and submit tasks.
-
-- **User Account Management**
-  - Only superadmins and admins can manage user accounts and edit user information.
-
-## Documentation and Testing
-
-- Access the GraphQL interactive documentation and perform test queries at: `http://localhost:3000/graphql`
-- Access documentation live demo : `https://universal-michaelina-one4zero.koyeb.app/graphql`
-
-Use this account to can test :
-- **Username:** superadmin@gmail.com
-- **Password:** Sup3r@dmin
-
-- Stream files from the local server:
-
-  - Profile images: `GET /files/image/:imageid`
-  - Lecture or lab files: `GET /files/file/:fileId`
-
-- Stream files from the FTP server:
-  - FTP profile images: `GET /files/image/ftp/:imageid`
-  - FTP files: `GET /files/file/ftp/:fileid`
-  - Task files: `GET /files/file/task/:taskid`
-  - Task answer files: `GET /files/file/taskanswer/:taskanswerid`
-
-## Getting Started
-
-To get started with the ULMS, follow these steps:
-
-1. Clone the repository to your local machine.
-2. Install the required dependencies using `npm install`.
-3. Configure your environment variables as per the `.env` file.
-4. Start the server with `npm run start`.
+- Node.js (v18 or higher)
+- npm or yarn
+- Microsoft SQL Server
+- (Optional) Docker and Docker Compose for containerized deployment
 
 ## Installation
 
+1. **Clone the Repository**
+
+   ```bash
+   git clone https://github.com/your-username/ulms.git
+   cd ulms
+   ```
+
+2. **Install Dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Environment Configuration**
+   Create a `.env` file in the root directory with the following variables:
+
+   ```env
+   DB_HOST=your-db-host
+   DB_USER=your-db-user
+   DB_PASSWORD=your-db-password
+   DB_NAME=your-db-name
+   DB_POOL_MAX=10
+   DB_POOL_MIN=0
+   JWT_SECRET=your-jwt-secret
+   # Add other required environment variables as needed
+   ```
+
+4. **Database Setup**
+   Ensure your Microsoft SQL Server is running and the database is created. The application will handle table creation via the provided scripts or migrations.
+
+## Running the Application
+
+### Development Mode
+
 ```bash
-$ npm install
+npm run start:dev
 ```
 
-## Running the app
+The application will start on `http://localhost:3000`.
+
+### Production Mode
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm run build
+npm run start:prod
 ```
 
-## Test
+### Using Docker
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+docker-compose up -d
 ```
+
+## API Documentation
+
+- **GraphQL Playground**: Access interactive documentation at `http://localhost:3000/graphql`
+- **Live Demo**: Explore the API at `https://universal-michaelina-one4zero.koyeb.app/graphql`
+
+### Test Credentials
+
+- **Username**: superadmin@gmail.com
+- **Password**: Sup3r@dmin
+
+## File Streaming Endpoints
+
+### Local Server Files
+
+- Profile Images: `GET /files/image/:imageId`
+- Lecture/Lab Files: `GET /files/file/:fileId`
+
+### FTP Server Files
+
+- FTP Profile Images: `GET /files/image/ftp/:imageId`
+- FTP Files: `GET /files/file/ftp/:fileId`
+- Task Files: `GET /files/file/task/:taskId`
+- Task Answer Files: `GET /files/file/taskanswer/:taskAnswerId`
+
+## Testing
+
+```bash
+# Unit Tests
+npm run test
+
+# End-to-End Tests
+npm run test:e2e
+
+# Test Coverage
+npm run test:cov
+```
+
+## Project Structure
+
+```
+src/
+├── app.module.ts          # Main application module
+├── main.ts                # Application entry point
+├── auth/                  # Authentication module
+├── database/              # Database configuration and services
+├── user/                  # User management
+├── university/            # University management
+├── faculty/               # Faculty management
+├── department/            # Department management
+├── course/                # Course management
+├── semester/              # Semester management
+├── lecture/               # Lecture management
+├── quiz/                  # Quiz management
+├── task/                  # Task management
+├── files/                 # File handling services
+└── ...                    # Additional modules
+```
+
+## Technologies Used
+
+- **Framework**: NestJS
+- **API**: GraphQL with Apollo Server
+- **Database**: Microsoft SQL Server
+- **Authentication**: JWT with Passport.js
+- **Validation**: Joi
+- **File Uploads**: GraphQL Upload
+- **Testing**: Jest
+- **Linting**: ESLint with Prettier
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
